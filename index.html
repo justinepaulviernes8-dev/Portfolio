@@ -1,0 +1,559 @@
+<!doctype html>
+<!-- [scrollbar-width:none] and [&::-webkit-scrollbar]:hidden hide the page scrollbar; scrolling still works -->
+<html lang="en" class="scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Justine Paul Viernes | Portfolio</title>
+  <meta name="description" content="Portfolio of Justine Paul Viernes, student and aspiring web designer.">
+  <link rel="icon" type="image/png" href="images/logo/logo.png">
+
+  <!-- Font: Poppins (Google Fonts) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS v4 (CDN / browser build) -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style type="text/tailwindcss">
+    /* Dark mode is switched by adding the "dark" class to <html> (see js/script.js) */
+    @custom-variant dark (&:where(.dark, .dark *));
+
+    @theme {
+      --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
+    }
+
+    /* Project modal animation: zoom in when opening, zoom out when closing */
+    @keyframes modal-in  { from { opacity: 0; transform: translateY(24px) scale(0.92); } }
+    @keyframes modal-out { to   { opacity: 0; transform: translateY(16px) scale(0.95); } }
+    @keyframes fade-in   { from { opacity: 0; } }
+    @keyframes fade-out  { to   { opacity: 0; } }
+    #project-modal[open]              { animation: modal-in 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); }
+    #project-modal[open]::backdrop    { animation: fade-in 0.3s ease-out; }
+    #project-modal.is-closing           { animation: modal-out 0.2s ease-in forwards; }
+    #project-modal.is-closing::backdrop { animation: fade-out 0.2s ease-in forwards; }
+    @media (prefers-reduced-motion: reduce) {
+      #project-modal, #project-modal::backdrop { animation: none !important; }
+    }
+
+    
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+      animation: none;
+      mix-blend-mode: normal;
+    }
+    
+    .theme-shockwave {
+      position: fixed;
+      z-index: 9999;
+      pointer-events: none;
+      border-radius: 9999px;
+      border: 3px solid rgb(96 165 250);
+      box-shadow: 0 0 24px 6px rgb(59 130 246 / 0.7), inset 0 0 40px 8px rgb(59 130 246 / 0.45);
+    }
+
+    /* Scroll animation: js/scroll-reveal.js adds .reveal-ready to <html> and .is-visible to each item */
+    .reveal-ready [data-reveal] {
+      opacity: 0;
+      transform: translateY(28px);
+    }
+    /* The transition is only on the visible state, so hiding is instant and only the fade-in animates */
+    .reveal-ready [data-reveal].is-visible {
+      opacity: 1;
+      transform: none;
+      transition: opacity 0.7s ease-out, transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+      transition-delay: var(--reveal-delay, 0ms);
+    }
+  </style>
+</head>
+
+<body class="bg-white font-sans text-slate-900 antialiased transition-colors dark:bg-slate-950 dark:text-slate-100">
+
+  <!-- Skip link for keyboard users -->
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-blue-600 focus:px-4 focus:py-2 focus:text-white">Skip to content</a>
+
+  <!-- ===================== HEADER / NAVIGATION ===================== -->
+  <!-- id="site-header" is used by js/hide-nav.js (hides on scroll down, shows on scroll up) -->
+  <header id="site-header" class="sticky top-0 z-40 border-b border-gray-200 bg-white/90 backdrop-blur transition-transform duration-300 dark:border-slate-800 dark:bg-slate-950/90">
+    <nav class="mx-auto flex max-w-6xl 2xl:max-w-7xl items-center justify-between px-4 py-3 sm:px-6" aria-label="Main">
+      <a href="#home" class="flex items-center gap-3 rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-600">
+        <!-- Logo: black J on white. dark:invert flips it to a white J on black in dark mode -->
+        <img src="images/logo/logo.png" alt="" width="40" height="40" class="size-10 rounded-xl border border-gray-200 bg-white object-contain dark:border-slate-700 dark:invert">
+        <span class="sr-only">Home — </span>
+        <span class="text-lg font-semibold whitespace-nowrap">Justine</span>
+      </a>
+
+      <div class="flex items-center gap-2">
+        <!-- Desktop links (lg and up) -->
+        <ul class="hidden items-center gap-7 lg:flex">
+          <li><a href="#home" data-nav class="border-b-2 border-transparent py-2 text-[15px] font-medium text-gray-600 hover:text-slate-900 aria-[current=page]:border-blue-600 aria-[current=page]:font-semibold aria-[current=page]:text-blue-700 dark:text-slate-400 dark:hover:text-white dark:aria-[current=page]:text-blue-300">Home</a></li>
+          <li><a href="#about" data-nav class="border-b-2 border-transparent py-2 text-[15px] font-medium text-gray-600 hover:text-slate-900 aria-[current=page]:border-blue-600 aria-[current=page]:font-semibold aria-[current=page]:text-blue-700 dark:text-slate-400 dark:hover:text-white dark:aria-[current=page]:text-blue-300">About Me</a></li>
+          <li><a href="#skills" data-nav class="border-b-2 border-transparent py-2 text-[15px] font-medium text-gray-600 hover:text-slate-900 aria-[current=page]:border-blue-600 aria-[current=page]:font-semibold aria-[current=page]:text-blue-700 dark:text-slate-400 dark:hover:text-white dark:aria-[current=page]:text-blue-300">Skills</a></li>
+          <li><a href="#projects" data-nav class="border-b-2 border-transparent py-2 text-[15px] font-medium text-gray-600 hover:text-slate-900 aria-[current=page]:border-blue-600 aria-[current=page]:font-semibold aria-[current=page]:text-blue-700 dark:text-slate-400 dark:hover:text-white dark:aria-[current=page]:text-blue-300">Projects</a></li>
+          <li><a href="#education" data-nav class="border-b-2 border-transparent py-2 text-[15px] font-medium text-gray-600 hover:text-slate-900 aria-[current=page]:border-blue-600 aria-[current=page]:font-semibold aria-[current=page]:text-blue-700 dark:text-slate-400 dark:hover:text-white dark:aria-[current=page]:text-blue-300">Education</a></li>
+          <li><a href="#contact" data-nav class="border-b-2 border-transparent py-2 text-[15px] font-medium text-gray-600 hover:text-slate-900 aria-[current=page]:border-blue-600 aria-[current=page]:font-semibold aria-[current=page]:text-blue-700 dark:text-slate-400 dark:hover:text-white dark:aria-[current=page]:text-blue-300">Contact</a></li>
+        </ul>
+
+        <!-- JS feature 2: Dark / light mode toggle -->
+        <button id="theme-toggle" type="button" aria-label="Switch to dark mode"
+          class="grid size-11 place-items-center overflow-hidden rounded-full border border-gray-200 transition duration-300 hover:scale-110 hover:bg-blue-50 active:scale-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 motion-reduce:transition-none dark:border-slate-700 dark:hover:bg-slate-800">
+          <!-- Button animation: both icons sit in the same grid cell ([grid-area:1/1]).
+               Switching theme spins and shrinks one icon out while the other spins and grows in. -->
+          <!-- moon (shown in light mode) -->
+          <svg class="size-5 rotate-0 scale-100 text-blue-700 opacity-100 transition duration-500 ease-out [grid-area:1/1] motion-reduce:transition-none dark:-rotate-90 dark:scale-0 dark:opacity-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <!-- sun (shown in dark mode) -->
+          <svg class="size-5 rotate-90 scale-0 text-amber-300 opacity-0 transition duration-500 ease-out [grid-area:1/1] motion-reduce:transition-none dark:rotate-0 dark:scale-100 dark:opacity-100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        </button>
+
+        <!-- JS feature 1: Mobile menu toggle (below lg) -->
+        <button id="menu-button" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu"
+          class="group grid size-11 place-items-center rounded-xl bg-blue-600 text-white transition hover:bg-blue-700 active:scale-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 motion-reduce:transition-none lg:hidden">
+          <!-- Hamburger animation: 3 bars in the same grid cell ([grid-area:1/1]).
+               When aria-expanded="true", the top and bottom bars rotate into an X and the middle bar disappears. -->
+          <span aria-hidden="true" class="h-0.5 w-5 -translate-y-1.5 rounded-full bg-current transition duration-300 ease-out [grid-area:1/1] group-aria-expanded:translate-y-0 group-aria-expanded:rotate-45 motion-reduce:transition-none"></span>
+          <span aria-hidden="true" class="h-0.5 w-5 rounded-full bg-current transition duration-300 ease-out [grid-area:1/1] group-aria-expanded:scale-x-0 group-aria-expanded:opacity-0 motion-reduce:transition-none"></span>
+          <span aria-hidden="true" class="h-0.5 w-5 translate-y-1.5 rounded-full bg-current transition duration-300 ease-out [grid-area:1/1] group-aria-expanded:translate-y-0 group-aria-expanded:-rotate-45 motion-reduce:transition-none"></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile menu panel -->
+    <!-- Slide animation: grid-rows-[0fr] (closed, 0 height) -> data-[open=true]:grid-rows-[1fr] (open, full height).
+         "inert" makes the closed menu unreachable with Tab and screen readers (js/menu.js toggles it). -->
+    <div id="mobile-menu" data-open="false" inert
+      class="group grid grid-rows-[0fr] opacity-0 transition-[grid-template-rows,opacity] duration-300 ease-out data-[open=true]:grid-rows-[1fr] data-[open=true]:opacity-100 motion-reduce:transition-none lg:hidden">
+      <div class="overflow-hidden">
+      <ul class="flex flex-col gap-1 border-t border-gray-200 px-4 pt-3 pb-4 dark:border-slate-800">
+        <li class="-translate-y-2 opacity-0 transition duration-300 delay-[40ms] group-data-[open=true]:translate-y-0 group-data-[open=true]:opacity-100 motion-reduce:transition-none"><a href="#home" data-nav class="block rounded-xl px-4 py-3 font-medium hover:bg-blue-50 aria-[current=page]:bg-blue-50 aria-[current=page]:font-semibold aria-[current=page]:text-blue-700 dark:hover:bg-slate-800 dark:aria-[current=page]:bg-blue-950 dark:aria-[current=page]:text-blue-300">Home</a></li>
+        <li class="-translate-y-2 opacity-0 transition duration-300 delay-[80ms] group-data-[open=true]:translate-y-0 group-data-[open=true]:opacity-100 motion-reduce:transition-none"><a href="#about" data-nav class="block rounded-xl px-4 py-3 font-medium hover:bg-blue-50 aria-[current=page]:bg-blue-50 aria-[current=page]:font-semibold aria-[current=page]:text-blue-700 dark:hover:bg-slate-800 dark:aria-[current=page]:bg-blue-950 dark:aria-[current=page]:text-blue-300">About Me</a></li>
+        <li class="-translate-y-2 opacity-0 transition duration-300 delay-[120ms] group-data-[open=true]:translate-y-0 group-data-[open=true]:opacity-100 motion-reduce:transition-none"><a href="#skills" data-nav class="block rounded-xl px-4 py-3 font-medium hover:bg-blue-50 aria-[current=page]:bg-blue-50 aria-[current=page]:font-semibold aria-[current=page]:text-blue-700 dark:hover:bg-slate-800 dark:aria-[current=page]:bg-blue-950 dark:aria-[current=page]:text-blue-300">Skills</a></li>
+        <li class="-translate-y-2 opacity-0 transition duration-300 delay-[160ms] group-data-[open=true]:translate-y-0 group-data-[open=true]:opacity-100 motion-reduce:transition-none"><a href="#projects" data-nav class="block rounded-xl px-4 py-3 font-medium hover:bg-blue-50 aria-[current=page]:bg-blue-50 aria-[current=page]:font-semibold aria-[current=page]:text-blue-700 dark:hover:bg-slate-800 dark:aria-[current=page]:bg-blue-950 dark:aria-[current=page]:text-blue-300">Projects</a></li>
+        <li class="-translate-y-2 opacity-0 transition duration-300 delay-[200ms] group-data-[open=true]:translate-y-0 group-data-[open=true]:opacity-100 motion-reduce:transition-none"><a href="#education" data-nav class="block rounded-xl px-4 py-3 font-medium hover:bg-blue-50 aria-[current=page]:bg-blue-50 aria-[current=page]:font-semibold aria-[current=page]:text-blue-700 dark:hover:bg-slate-800 dark:aria-[current=page]:bg-blue-950 dark:aria-[current=page]:text-blue-300">Education</a></li>
+        <li class="-translate-y-2 opacity-0 transition duration-300 delay-[240ms] group-data-[open=true]:translate-y-0 group-data-[open=true]:opacity-100 motion-reduce:transition-none"><a href="#contact" data-nav class="block rounded-xl px-4 py-3 font-medium hover:bg-blue-50 aria-[current=page]:bg-blue-50 aria-[current=page]:font-semibold aria-[current=page]:text-blue-700 dark:hover:bg-slate-800 dark:aria-[current=page]:bg-blue-950 dark:aria-[current=page]:text-blue-300">Contact</a></li>
+      </ul>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ===================== 1. HOME / HERO ===================== -->
+    <!-- min-h: the hero fills the screen below the 69px header on any device -->
+    <section id="home" class="flex min-h-[calc(100svh-69px)] scroll-mt-20 items-center">
+      <div class="mx-auto grid w-full max-w-6xl 2xl:max-w-7xl items-center gap-10 px-4 py-12 sm:px-6 md:grid-cols-2 md:py-16">
+        <div data-reveal class="flex flex-col items-start gap-5">
+          <span class="inline-flex items-center gap-2 rounded-full bg-blue-50 px-4 py-1.5 text-sm font-medium text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+            <span class="size-2 rounded-full bg-blue-600" aria-hidden="true"></span>Welcome to my portfolio
+          </span>
+          <h1 class="text-4xl leading-tight font-bold sm:text-5xl">Hi, I'm <span class="text-blue-700 dark:text-blue-300">Justine Paul Viernes</span></h1>
+          <p class="text-lg font-medium sm:text-xl">Student <span class="text-blue-600" aria-hidden="true">|</span> Aspiring Web Designer</p>
+          <p class="max-w-md text-gray-600 dark:text-slate-400">[Short welcome message — one or two sentences about what you love to create and what visitors will find here.]</p>
+          <div class="flex flex-wrap gap-3 pt-2">
+            <a href="#projects" class="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-3.5 font-semibold text-white shadow-sm hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
+              View My Projects
+              <svg class="size-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="#contact" class="inline-flex items-center rounded-xl border-[1.5px] border-gray-300 px-6 py-3.5 font-semibold hover:border-blue-600 hover:text-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:border-slate-700 dark:hover:text-blue-300">Contact Me</a>
+          </div>
+        </div>
+
+        <div data-reveal class="flex justify-center">
+          <!-- Photo size follows the screen: never wider than 80% of the width or taller than half the height -->
+          <div class="relative aspect-square w-[min(20rem,80vw,50svh)] lg:w-[min(26rem,52svh)]">
+            <div class="absolute inset-0 rounded-full bg-blue-50 dark:bg-blue-950" aria-hidden="true"></div>
+            <!-- Light mode shows the black suit photo, dark mode the white suit photo (dark:hidden / hidden dark:block) -->
+            <img src="images/profile/profile-light.png" alt="Portrait of Justine Paul Viernes in a black suit and red tie" class="absolute inset-6 size-[calc(100%-3rem)] rounded-full bg-blue-100 object-cover dark:hidden">
+            <img src="images/profile/profile-dark.png" alt="Portrait of Justine Paul Viernes in a white suit and grey tie" class="absolute inset-6 hidden size-[calc(100%-3rem)] rounded-full bg-blue-100 object-cover dark:block">
+            <span class="absolute -left-2 bottom-10 flex items-center gap-2 rounded-2xl border border-gray-200 bg-white px-4 py-2.5 text-sm font-semibold shadow-lg shadow-slate-900/5 dark:border-slate-700 dark:bg-slate-900">
+              <svg class="size-[18px] text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>Web Design
+            </span>
+            <span class="absolute -right-2 top-10 flex items-center gap-2 rounded-2xl border border-gray-200 bg-white px-4 py-2.5 text-sm font-semibold shadow-lg shadow-slate-900/5 dark:border-slate-700 dark:bg-slate-900">
+              <svg class="size-[18px] text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></svg>HTML · Tailwind · JS
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 2. ABOUT ME ===================== -->
+    <section id="about" class="scroll-mt-20 bg-gray-100 py-20 md:py-24 dark:bg-slate-900">
+      <div class="mx-auto max-w-6xl 2xl:max-w-7xl px-4 sm:px-6">
+        <div data-reveal class="mb-12 text-center">
+          <p class="text-sm font-semibold tracking-[0.12em] text-blue-700 dark:text-blue-300">ABOUT ME</p>
+          <h2 class="mt-2 text-3xl font-bold sm:text-4xl">Get to know me</h2>
+        </div>
+
+        <div class="grid gap-6 md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
+          <!-- Same idea as the Home photo: one image per theme -->
+          <img data-reveal src="images/profile/profile-light.png" alt="Justine Paul Viernes in a black suit and red tie" class="h-full max-h-[440px] w-full rounded-3xl bg-blue-100 object-cover dark:hidden">
+          <img data-reveal src="images/profile/profile-dark.png" alt="Justine Paul Viernes in a white suit and grey tie" class="hidden h-full max-h-[440px] w-full rounded-3xl bg-blue-950 object-cover dark:block">
+
+          <div class="flex flex-col gap-6">
+            <article data-reveal class="rounded-3xl border border-gray-200 bg-white p-8 dark:border-slate-800 dark:bg-slate-950">
+              <div class="mb-4 flex items-center gap-3">
+                <span class="grid size-12 place-items-center rounded-2xl bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+                  <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </span>
+                <h3 class="text-xl font-semibold">Introduction</h3>
+              </div>
+              <p class="text-gray-600 dark:text-slate-400">[Two or three sentences introducing yourself: who you are, what you study, and what got you interested in web design.]</p>
+              <p class="mt-3 text-gray-600 dark:text-slate-400">[One sentence about your personality or how you like to work.]</p>
+            </article>
+
+            <article data-reveal class="rounded-3xl border border-gray-200 bg-white p-8 dark:border-slate-800 dark:bg-slate-950">
+              <div class="mb-4 flex items-center gap-3">
+                <span class="grid size-12 place-items-center rounded-2xl bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+                  <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+                </span>
+                <h3 class="text-xl font-semibold">Goals &amp; Interests</h3>
+              </div>
+              <ul class="list-disc space-y-1 pl-5 text-gray-600 dark:text-slate-400">
+                <li>[Short-term goal for this school year]</li>
+                <li>[Long-term career goal]</li>
+              </ul>
+              <ul class="mt-4 flex flex-wrap gap-2" aria-label="Interests">
+                <li class="rounded-full bg-blue-50 px-3 py-1.5 text-sm font-medium text-blue-700 dark:bg-blue-950 dark:text-blue-300">Web Design</li>
+                <li class="rounded-full bg-blue-50 px-3 py-1.5 text-sm font-medium text-blue-700 dark:bg-blue-950 dark:text-blue-300">UI/UX</li>
+                <li class="rounded-full bg-blue-50 px-3 py-1.5 text-sm font-medium text-blue-700 dark:bg-blue-950 dark:text-blue-300">[Interest]</li>
+                <li class="rounded-full bg-blue-50 px-3 py-1.5 text-sm font-medium text-blue-700 dark:bg-blue-950 dark:text-blue-300">[Hobby]</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 3. SKILLS ===================== -->
+    <section id="skills" class="scroll-mt-20 py-20 md:py-24">
+      <div class="mx-auto max-w-6xl 2xl:max-w-7xl px-4 sm:px-6">
+        <div data-reveal class="mb-12 text-center">
+          <p class="text-sm font-semibold tracking-[0.12em] text-blue-700 dark:text-blue-300">SKILLS</p>
+          <h2 class="mt-2 text-3xl font-bold sm:text-4xl">What I can do</h2>
+        </div>
+
+        <div class="grid gap-6 lg:grid-cols-2">
+          <!-- Technical skills: badge cards with a level label (no percentages) -->
+          <article data-reveal class="rounded-3xl border border-gray-200 p-5 sm:p-8 dark:border-slate-800 dark:bg-slate-900">
+            <div class="mb-6 flex items-center gap-3">
+              <span class="grid size-11 place-items-center rounded-xl bg-blue-600 text-white">
+                <svg class="size-[22px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></svg>
+              </span>
+              <h3 class="text-xl font-semibold">Technical Skills</h3>
+            </div>
+            <ul class="grid gap-3 sm:grid-cols-2">
+              <li class="flex min-w-0 items-center gap-3 rounded-2xl border border-gray-200 p-3 sm:p-4 dark:border-slate-700">
+                <span class="grid size-10 place-items-center rounded-xl bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300"><svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></span>
+                <span><span class="block font-semibold">HTML5</span><span class="text-sm text-gray-600 dark:text-slate-400">[Level]</span></span>
+              </li>
+              <li class="flex min-w-0 items-center gap-3 rounded-2xl border border-gray-200 p-3 sm:p-4 dark:border-slate-700">
+                <span class="grid size-10 place-items-center rounded-xl bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300"><svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/></svg></span>
+                <span><span class="block font-semibold">Tailwind CSS</span><span class="text-sm text-gray-600 dark:text-slate-400">[Level]</span></span>
+              </li>
+              <li class="flex min-w-0 items-center gap-3 rounded-2xl border border-gray-200 p-3 sm:p-4 dark:border-slate-700">
+                <span class="grid size-10 place-items-center rounded-xl bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300"><svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></svg></span>
+                <span><span class="block font-semibold">JavaScript</span><span class="text-sm text-gray-600 dark:text-slate-400">[Level]</span></span>
+              </li>
+              <li class="flex min-w-0 items-center gap-3 rounded-2xl border border-gray-200 p-3 sm:p-4 dark:border-slate-700">
+                <span class="grid size-10 place-items-center rounded-xl bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300"><svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M6 21V9a9 9 0 0 0 9 9"/></svg></span>
+                <span><span class="block font-semibold">Git &amp; GitHub</span><span class="text-sm text-gray-600 dark:text-slate-400">[Level]</span></span>
+              </li>
+              <li class="flex min-w-0 items-center gap-3 rounded-2xl border border-gray-200 p-3 sm:p-4 dark:border-slate-700">
+                <span class="grid size-10 place-items-center rounded-xl bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300"><svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></span>
+                <span><span class="block font-semibold">Canva</span><span class="text-sm text-gray-600 dark:text-slate-400">[Level]</span></span>
+              </li>
+              <li class="flex min-w-0 items-center gap-3 rounded-2xl border border-gray-200 p-3 sm:p-4 dark:border-slate-700">
+                <span class="grid size-10 place-items-center rounded-xl bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300"><svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2H8.5a3.5 3.5 0 0 0 0 7H12zM12 2h3.5a3.5 3.5 0 1 1 0 7H12zM12 9H8.5a3.5 3.5 0 0 0 0 7H12zM12 16H8.5a3.5 3.5 0 1 0 3.5 3.5zM12 12.5a3.5 3.5 0 1 0 7 0 3.5 3.5 0 1 0-7 0"/></svg></span>
+                <span><span class="block font-semibold">Figma</span><span class="text-sm text-gray-600 dark:text-slate-400">[Level]</span></span>
+              </li>
+            </ul>
+          </article>
+
+          <!-- Personal / soft skills (on phones the icon sits above the name; from sm: it sits beside it) -->
+          <article data-reveal class="rounded-3xl border border-gray-200 p-5 sm:p-8 dark:border-slate-800 dark:bg-slate-900">
+            <div class="mb-6 flex items-center gap-3">
+              <span class="grid size-11 place-items-center rounded-xl bg-blue-600 text-white">
+                <svg class="size-[22px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              </span>
+              <h3 class="text-xl font-semibold">Personal Skills</h3>
+            </div>
+            <ul class="grid grid-cols-1 gap-3 min-[360px]:grid-cols-2">
+              <li class="flex min-w-0 flex-col items-start gap-2 rounded-2xl border border-gray-200 p-3 text-sm leading-snug font-semibold break-words sm:flex-row sm:items-center sm:gap-3 sm:p-4 sm:text-base dark:border-slate-700"><svg class="size-[22px] shrink-0 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z"/></svg>Communication</li>
+              <li class="flex min-w-0 flex-col items-start gap-2 rounded-2xl border border-gray-200 p-3 text-sm leading-snug font-semibold break-words sm:flex-row sm:items-center sm:gap-3 sm:p-4 sm:text-base dark:border-slate-700"><svg class="size-[22px] shrink-0 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>Teamwork</li>
+              <li class="flex min-w-0 flex-col items-start gap-2 rounded-2xl border border-gray-200 p-3 text-sm leading-snug font-semibold break-words sm:flex-row sm:items-center sm:gap-3 sm:p-4 sm:text-base dark:border-slate-700"><svg class="size-[22px] shrink-0 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19 7-7 3 3-7 7zM18 13l-1.5-7.5L2 2l3.5 14.5L13 18zM2 2l7.59 7.59"/><circle cx="11" cy="11" r="2"/></svg>Creativity</li>
+              <li class="flex min-w-0 flex-col items-start gap-2 rounded-2xl border border-gray-200 p-3 text-sm leading-snug font-semibold break-words sm:flex-row sm:items-center sm:gap-3 sm:p-4 sm:text-base dark:border-slate-700"><svg class="size-[22px] shrink-0 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9z"/></svg>Problem Solving</li>
+              <li class="flex min-w-0 flex-col items-start gap-2 rounded-2xl border border-gray-200 p-3 text-sm leading-snug font-semibold break-words sm:flex-row sm:items-center sm:gap-3 sm:p-4 sm:text-base dark:border-slate-700"><svg class="size-[22px] shrink-0 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Time Management</li>
+              <li class="flex min-w-0 flex-col items-start gap-2 rounded-2xl border border-gray-200 p-3 text-sm leading-snug font-semibold break-words sm:flex-row sm:items-center sm:gap-3 sm:p-4 sm:text-base dark:border-slate-700"><svg class="size-[22px] shrink-0 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>Adaptability</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 4. PROJECTS ===================== -->
+    <section id="projects" class="scroll-mt-20 overflow-x-clip bg-gray-100 py-20 md:py-24 dark:bg-slate-900">
+      <div class="mx-auto max-w-6xl 2xl:max-w-7xl px-4 sm:px-6">
+        <div data-reveal class="mb-12 text-center">
+          <p class="text-sm font-semibold tracking-[0.12em] text-blue-700 dark:text-blue-300">PROJECTS</p>
+          <h2 class="mt-2 text-3xl font-bold sm:text-4xl">School projects &amp; activities</h2>
+        </div>
+
+        <!-- 3D carousel (js/project-carousel.js). To add a project, copy one <article> block. -->
+        <div data-reveal>
+          <div id="project-carousel" tabindex="0" aria-roledescription="carousel" aria-label="Projects (use the left and right arrow keys)"
+            class="relative mx-auto h-[min(25rem,56vw)] touch-pan-y rounded-2xl [perspective:1200px] focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-blue-600">
+            <!-- Project 1 -->
+            <article data-project data-details="[Longer description for project 1: the goal, how you built it, a challenge you solved, and what you learned.]"
+              class="absolute top-1/2 left-1/2 w-[min(36rem,78vw)] cursor-pointer overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl shadow-slate-900/25 transition-[transform,opacity,filter] duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)] select-none motion-reduce:transition-none dark:border-slate-700 dark:bg-slate-950">
+              <img src="images/projects/project-1.svg" alt="[Describe the screenshot of project 1]" draggable="false" class="aspect-[16/10] w-full object-cover">
+              <!-- Text for the panel below and the pop-up (hidden on the card itself) -->
+              <div class="hidden">
+                <span data-tag>Web Design</span>
+                <h3 data-title>[Project Title 1]</h3>
+                <p data-description>[Short description: what you made, the problem it solves, and your role.]</p>
+                <p data-tools><span>Tools:</span><span>HTML</span><span>Tailwind CSS</span><span>JavaScript</span></p>
+              </div>
+            </article>
+
+            <!-- Project 2 -->
+            <article data-project data-details="[Longer description for project 2: the goal, how you built it, a challenge you solved, and what you learned.]"
+              class="absolute top-1/2 left-1/2 w-[min(36rem,78vw)] cursor-pointer overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl shadow-slate-900/25 transition-[transform,opacity,filter] duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)] select-none motion-reduce:transition-none dark:border-slate-700 dark:bg-slate-950">
+              <img src="images/projects/project-2.svg" alt="[Describe the screenshot of project 2]" draggable="false" class="aspect-[16/10] w-full object-cover">
+              <!-- Text for the panel below and the pop-up (hidden on the card itself) -->
+              <div class="hidden">
+                <span data-tag>School Activity</span>
+                <h3 data-title>[Project Title 2]</h3>
+                <p data-description>[Short description: what you made, the problem it solves, and your role.]</p>
+                <p data-tools><span>Tools:</span><span>Canva</span><span>Figma</span></p>
+              </div>
+            </article>
+
+            <!-- Project 3 -->
+            <article data-project data-details="[Longer description for project 3: the goal, how you built it, a challenge you solved, and what you learned.]"
+              class="absolute top-1/2 left-1/2 w-[min(36rem,78vw)] cursor-pointer overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl shadow-slate-900/25 transition-[transform,opacity,filter] duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)] select-none motion-reduce:transition-none dark:border-slate-700 dark:bg-slate-950">
+              <img src="images/projects/project-3.svg" alt="[Describe the screenshot of project 3]" draggable="false" class="aspect-[16/10] w-full object-cover">
+              <!-- Text for the panel below and the pop-up (hidden on the card itself) -->
+              <div class="hidden">
+                <span data-tag>Group Project</span>
+                <h3 data-title>[Project Title 3]</h3>
+                <p data-description>[Short description: what you made, the problem it solves, and your role.]</p>
+                <p data-tools><span>Tools:</span><span>HTML</span><span>CSS</span><span>GitHub</span></p>
+              </div>
+            </article>
+
+            <!-- Project 4 -->
+            <article data-project data-details="[Longer description for project 4: the goal, how you built it, a challenge you solved, and what you learned.]"
+              class="absolute top-1/2 left-1/2 w-[min(36rem,78vw)] cursor-pointer overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl shadow-slate-900/25 transition-[transform,opacity,filter] duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)] select-none motion-reduce:transition-none dark:border-slate-700 dark:bg-slate-950">
+              <img src="images/projects/project-4.svg" alt="[Describe the screenshot of project 4]" draggable="false" class="aspect-[16/10] w-full object-cover">
+              <!-- Text for the panel below and the pop-up (hidden on the card itself) -->
+              <div class="hidden">
+                <span data-tag>Personal Build</span>
+                <h3 data-title>[Project Title 4]</h3>
+                <p data-description>[Short description: what you made, the problem it solves, and your role.]</p>
+                <p data-tools><span>Tools:</span><span>HTML</span><span>Tailwind CSS</span></p>
+              </div>
+            </article>
+
+            <!-- Project 5 -->
+            <article data-project data-details="[Longer description for project 5: the goal, how you built it, a challenge you solved, and what you learned.]"
+              class="absolute top-1/2 left-1/2 w-[min(36rem,78vw)] cursor-pointer overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl shadow-slate-900/25 transition-[transform,opacity,filter] duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)] select-none motion-reduce:transition-none dark:border-slate-700 dark:bg-slate-950">
+              <img src="images/projects/project-5.svg" alt="[Describe the screenshot of project 5]" draggable="false" class="aspect-[16/10] w-full object-cover">
+              <!-- Text for the panel below and the pop-up (hidden on the card itself) -->
+              <div class="hidden">
+                <span data-tag>Planned Project</span>
+                <h3 data-title>[Project Title 5]</h3>
+                <p data-description>[Short description: what you made, the problem it solves, and your role.]</p>
+                <p data-tools><span>Tools:</span><span>JavaScript</span></p>
+              </div>
+            </article>
+          </div>
+
+          <!-- Arrows and dots (arrows are hidden on desktop/laptop with lg:hidden; click the side cards there) -->
+          <div class="mt-8 flex items-center justify-center gap-5">
+            <button id="carousel-prev" type="button" aria-label="Previous project"
+              class="grid size-11 place-items-center rounded-full border border-gray-300 bg-white transition lg:hidden hover:scale-110 hover:border-blue-600 hover:text-blue-700 active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:border-slate-700 dark:bg-slate-950 dark:hover:text-blue-300">
+              <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            </button>
+            <div id="carousel-dots" class="flex items-center gap-2"></div>
+            <button id="carousel-next" type="button" aria-label="Next project"
+              class="grid size-11 place-items-center rounded-full border border-gray-300 bg-white transition lg:hidden hover:scale-110 hover:border-blue-600 hover:text-blue-700 active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:border-slate-700 dark:bg-slate-950 dark:hover:text-blue-300">
+              <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+
+          <!-- Info about the center project (filled in by js/project-carousel.js) -->
+          <div id="carousel-info" aria-live="polite" class="mx-auto mt-8 flex max-w-3xl flex-col items-center gap-4 text-center transition-opacity duration-200">
+            <span id="carousel-tag" class="rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700 dark:bg-blue-950 dark:text-blue-300"></span>
+            <h3 id="carousel-title" class="text-2xl leading-snug font-bold sm:text-3xl"></h3>
+            <p id="carousel-description" class="text-gray-600 dark:text-slate-400"></p>
+            <ul id="carousel-tools" class="flex flex-wrap justify-center gap-2" aria-label="Tools used"></ul>
+            <button id="carousel-view-project" type="button" data-open-project
+              class="group mt-1 inline-flex min-h-11 items-center gap-2 border-b-2 border-current font-semibold transition hover:text-blue-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-600 dark:hover:text-blue-300">
+              View Project
+              <svg class="size-4 transition-transform group-hover:translate-x-1 motion-reduce:transition-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== PROJECT MODAL (filled in by js/project-modal.js) ===================== -->
+    <!-- overflow-y-auto = scrollable; [scrollbar-width:none] + [&::-webkit-scrollbar]:hidden = no visible scrollbar -->
+    <dialog id="project-modal" aria-labelledby="modal-title"
+      class="m-auto max-h-[calc(100svh-2rem)] w-[min(56rem,calc(100%-2rem))] overflow-y-auto [scrollbar-width:none] rounded-3xl [&::-webkit-scrollbar]:hidden bg-white p-0 text-slate-900 shadow-2xl backdrop:bg-slate-950/60 backdrop:backdrop-blur-sm dark:bg-slate-900 dark:text-slate-100">
+      <div class="relative">
+        <img id="modal-image" src="images/projects/project-1.svg" alt="" class="aspect-[16/9] w-full bg-blue-100 object-cover">
+        <button type="button" data-close-modal aria-label="Close project"
+          class="absolute top-4 right-4 grid size-11 place-items-center rounded-full bg-white/90 text-slate-900 shadow-md transition hover:scale-105 hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
+          <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="flex flex-col gap-4 p-6 sm:p-8">
+        <span id="modal-tag" class="self-start rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700 dark:bg-blue-950 dark:text-blue-300"></span>
+        <h3 id="modal-title" class="text-2xl font-bold sm:text-3xl"></h3>
+        <p id="modal-description" class="text-gray-600 dark:text-slate-400"></p>
+        <p id="modal-details" class="text-gray-600 dark:text-slate-400"></p>
+        <div>
+          <p class="mb-2 text-sm font-semibold">Tools used</p>
+          <ul id="modal-tools" class="flex flex-wrap gap-2"></ul>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- ===================== 5. EDUCATION / EXPERIENCE ===================== -->
+    <section id="education" class="scroll-mt-20 py-20 md:py-24">
+      <div class="mx-auto max-w-6xl 2xl:max-w-7xl px-4 sm:px-6">
+        <div data-reveal class="mb-12 text-center">
+          <p class="text-sm font-semibold tracking-[0.12em] text-blue-700 dark:text-blue-300">EDUCATION</p>
+          <h2 class="mt-2 text-3xl font-bold sm:text-4xl">Education &amp; experience</h2>
+        </div>
+
+        <div class="grid gap-6 md:grid-cols-2">
+          <article data-reveal class="rounded-3xl border border-gray-200 p-8 dark:border-slate-800 dark:bg-slate-900">
+            <h3 class="mb-6 text-xl font-semibold">Education</h3>
+            <ol class="space-y-6 border-l-2 border-blue-100 pl-6 dark:border-blue-900">
+              <li class="relative">
+                <span class="absolute top-1.5 -left-[31px] size-3 rounded-full bg-blue-600 ring-4 ring-white dark:ring-slate-900" aria-hidden="true"></span>
+                <p class="text-sm font-semibold text-blue-700 dark:text-blue-300">[2024] – Present</p>
+                <p class="font-semibold">[BS Information Technology]</p>
+                <p class="text-sm text-gray-600 dark:text-slate-400">[Urdaneta City University]</p>
+              </li>
+              <li class="relative">
+                <span class="absolute top-1.5 -left-[31px] size-3 rounded-full bg-blue-600 ring-4 ring-white dark:ring-slate-900" aria-hidden="true"></span>
+                <p class="text-sm font-semibold text-blue-700 dark:text-blue-300">[2022] – [2023]</p>
+                <p class="font-semibold">[Senior High School GAS Strand]</p>
+                <p class="text-sm text-gray-600 dark:text-slate-400">[Cabuloan National High School]</p>
+              </li>
+            </ol>
+          </article>
+
+          <article data-reveal class="rounded-3xl border border-gray-200 p-8 dark:border-slate-800 dark:bg-slate-900">
+            <h3 class="mb-6 text-xl font-semibold">Trainings &amp; Certifications</h3>
+            <ol class="space-y-6 border-l-2 border-blue-100 pl-6 dark:border-blue-900">
+              <li class="relative">
+                <span class="absolute top-1.5 -left-[31px] size-3 rounded-full bg-blue-600 ring-4 ring-white dark:ring-slate-900" aria-hidden="true"></span>
+                <p class="text-sm font-semibold text-blue-700 dark:text-blue-300">[Month Year]</p>
+                <p class="font-semibold">[Seminar or Workshop Title]</p>
+                <p class="text-sm text-gray-600 dark:text-slate-400">[Organizer]</p>
+              </li>
+              <li class="relative">
+                <span class="absolute top-1.5 -left-[31px] size-3 rounded-full bg-blue-600 ring-4 ring-white dark:ring-slate-900" aria-hidden="true"></span>
+                <p class="text-sm font-semibold text-blue-700 dark:text-blue-300">[Month Year]</p>
+                <p class="font-semibold">[Certification or Online Course]</p>
+                <p class="text-sm text-gray-600 dark:text-slate-400">[Provider]</p>
+              </li>
+            </ol>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 6. CONTACT ===================== -->
+    <section id="contact" class="scroll-mt-20 bg-gray-100 py-20 md:py-24 dark:bg-slate-900">
+      <div class="mx-auto max-w-6xl 2xl:max-w-7xl px-4 sm:px-6">
+        <div data-reveal class="mb-12 text-center">
+          <p class="text-sm font-semibold tracking-[0.12em] text-blue-700 dark:text-blue-300">CONTACT</p>
+          <h2 class="mt-2 text-3xl font-bold sm:text-4xl">Let's connect</h2>
+        </div>
+
+        <div class="grid gap-6 md:grid-cols-2">
+          <!-- Professional links -->
+          <div data-reveal class="flex flex-col gap-6 rounded-3xl bg-blue-600 p-8 text-white sm:p-9">
+            <h3 class="text-2xl font-semibold">Get in touch</h3>
+            <p>[One friendly sentence inviting people to reach out about projects, collaborations or school work.]</p>
+            <ul class="flex flex-col gap-4">
+              <li>
+                <a href="mailto:your.email@example.com" class="flex items-center gap-4 rounded-xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
+                  <span class="grid size-11 place-items-center rounded-xl bg-white/20"><svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><path d="m22 6-10 7L2 6"/></svg></span>
+                  <span><span class="block text-sm">Email</span><span class="font-semibold underline-offset-4 hover:underline">[your.email@example.com]</span></span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-4 rounded-xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
+                  <span class="grid size-11 place-items-center rounded-xl bg-white/20"><svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg></span>
+                  <span><span class="block text-sm">GitHub</span><span class="font-semibold underline-offset-4 hover:underline">github.com/[username]</span></span>
+                </a>
+              </li>
+              <li>
+                <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-4 rounded-xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
+                  <span class="grid size-11 place-items-center rounded-xl bg-white/20"><svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></span>
+                  <span><span class="block text-sm">LinkedIn</span><span class="font-semibold underline-offset-4 hover:underline">linkedin.com/in/[username]</span></span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- JS feature 3: Front-end-only contact form with validation -->
+          <form data-reveal id="contact-form" novalidate class="flex flex-col gap-5 rounded-3xl border border-gray-200 bg-white p-8 sm:p-9 dark:border-slate-800 dark:bg-slate-950">
+            <div class="flex flex-col gap-1.5">
+              <label for="name" class="text-sm font-medium">Name</label>
+              <input id="name" name="name" type="text" autocomplete="name" placeholder="Your full name" aria-describedby="name-error"
+                class="rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 placeholder:text-gray-500 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/30 focus:outline-none aria-invalid:border-red-600 dark:border-slate-700 dark:bg-slate-900 dark:placeholder:text-slate-500 dark:aria-invalid:border-red-400">
+              <p id="name-error" class="hidden text-sm font-medium text-red-600 dark:text-red-400"></p>
+            </div>
+            <div class="flex flex-col gap-1.5">
+              <label for="email" class="text-sm font-medium">Email</label>
+              <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" aria-describedby="email-error"
+                class="rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 placeholder:text-gray-500 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/30 focus:outline-none aria-invalid:border-red-600 dark:border-slate-700 dark:bg-slate-900 dark:placeholder:text-slate-500 dark:aria-invalid:border-red-400">
+              <p id="email-error" class="hidden text-sm font-medium text-red-600 dark:text-red-400"></p>
+            </div>
+            <div class="flex flex-col gap-1.5">
+              <label for="message" class="text-sm font-medium">Message</label>
+              <textarea id="message" name="message" rows="5" placeholder="Write your message…" aria-describedby="message-error"
+                class="resize-y rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 placeholder:text-gray-500 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/30 focus:outline-none aria-invalid:border-red-600 dark:border-slate-700 dark:bg-slate-900 dark:placeholder:text-slate-500 dark:aria-invalid:border-red-400"></textarea>
+              <p id="message-error" class="hidden text-sm font-medium text-red-600 dark:text-red-400"></p>
+            </div>
+            <button type="submit" class="inline-flex items-center gap-2 self-start rounded-xl bg-blue-600 px-6 py-3.5 font-semibold text-white hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
+              Send Message
+              <svg class="size-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4z"/></svg>
+            </button>
+            <p id="form-success" role="status" class="hidden rounded-xl border border-blue-100 bg-blue-50 px-4 py-3 text-sm font-medium text-blue-700 dark:border-blue-900 dark:bg-blue-950 dark:text-blue-300"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="border-t border-gray-200 px-4 py-7 text-center text-sm text-gray-600 dark:border-slate-800 dark:text-slate-400">
+    <p>© 2026 Justine Paul Viernes · Built with HTML, Tailwind CSS &amp; JavaScript</p>
+    <p class="mt-1">Icons: Feather Icons (MIT). Font: Poppins (Google Fonts).</p>
+  </footer>
+
+  <!-- Extra: back-to-top button (appears after scrolling) -->
+  <a href="#home" id="back-to-top" aria-label="Back to top"
+    class="pointer-events-none fixed right-5 bottom-5 z-40 grid size-12 place-items-center rounded-full bg-blue-600 text-white opacity-0 shadow-lg shadow-blue-600/40 transition-opacity hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 sm:right-7 sm:bottom-7">
+    <svg class="size-[22px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </a>
+
+  <!-- JavaScript: one file per feature (see js/ folder) -->
+  <script src="js/theme.js"></script>
+  <script src="js/menu.js"></script>
+  <script src="js/nav-highlight.js"></script>
+  <script src="js/form-validation.js"></script>
+  <script src="js/back-to-top.js"></script>
+  <script src="js/hide-nav.js"></script>
+  <script src="js/project-carousel.js"></script>
+  <script src="js/project-modal.js"></script>
+  <script src="js/scroll-reveal.js"></script>
+</body>
+</html>
