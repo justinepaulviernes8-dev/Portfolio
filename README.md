@@ -27,8 +27,9 @@ Viernes_Portfolio/
 │   ├── project-modal.js    "View Project" pop-up with zoom animation
 │   └── scroll-reveal.js    fade-in animation while scrolling
 ├── images/
-│   ├── profile/            profile.png
-│   └── projects/           project-1.svg … project-5.svg (replace with screenshots)
+│   ├── logo/               logo.png (160px, used on the site) + logo-original.png
+│   ├── profile/            profile-light.png (light mode), profile-dark.png (dark mode)
+│   └── projects/           project screenshots (Laravel, FlutterAndDart, Figma, Blender, NetBeansGUI)
 ├── screenshots/            375px, 768px and 1280px screenshots for submission
 └── README.md
 ```
@@ -43,7 +44,8 @@ Viernes_Portfolio/
 | Back-to-top button not showing | `js/back-to-top.js` |
 | Nav does not hide/show on scroll | `js/hide-nav.js` (header needs `id="site-header"`) |
 | Carousel cards in the wrong place, arrows/dots/swipe not working, or text below not changing | `js/project-carousel.js` (the `positions` table controls size, tilt and spacing) |
-| Project pop-up does not open, shows wrong content, or won't close | `js/project-modal.js`; each slide needs `data-project`, the button `data-open-project` |
+| Project pop-up does not open, shows wrong content, or won't close | `js/project-modal.js` (listens for the `open-project` event sent by `js/project-carousel.js`); each slide needs `data-project` |
+| Hover glow/zoom on the center card | `#project-carousel [data-project].is-active:hover` in the `<style>` block in `index.html` `<head>` |
 | Items do not fade in while scrolling (or stay invisible) | `js/scroll-reveal.js`; the element needs `data-reveal`; styles are `.reveal-ready [data-reveal]` in `<head>` |
 | Pop-up animation looks wrong | `@keyframes modal-in / modal-out` in the `<style>` block in `index.html` `<head>` |
 | Layout, colors, spacing, text | the matching `<!-- ===== SECTION ===== -->` block in `index.html` |

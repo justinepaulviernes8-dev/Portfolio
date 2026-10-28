@@ -3,8 +3,8 @@
 // Uses in index.html:
 //   - each card: <article data-project data-details="...">
 //     with [data-tag], [data-title], [data-description], [data-tools] inside
-//   - the "View Project" button: [data-open-project] (opens the .is-active carousel slide)
 //   - the modal: #project-modal and its #modal-... elements, [data-close-modal]
+// Opens when js/project-carousel.js sends the "open-project" event (click or Enter on the center card)
 // The zoom animation is in the <style> block in <head> (@keyframes modal-in / modal-out)
 // =========================================================
 
@@ -23,7 +23,7 @@ function initProjectModal() {
   const modalDetails = modal.querySelector('#modal-details');
   const modalTools = modal.querySelector('#modal-tools');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  let lastButton = null;
+  let returnFocusTo = null; // where keyboard focus goes back to after closing
 
   // Copy the card's content into the modal (textContent only, never innerHTML)
   function fillModal(card) {
@@ -45,21 +45,19 @@ function initProjectModal() {
     });
   }
 
-  function openModal(button) {
-    lastButton = button;
-    // A button inside a card opens that card; the carousel's button opens the center (.is-active) slide
-    const card = button.closest('[data-project]') || document.querySelector('[data-project].is-active');
+  function openModal(card, focusAfterClose) {
+    returnFocusTo = focusAfterClose;
     fillModal(card);
     modal.showModal(); // the [open] attribute starts the modal-in animation
     document.documentElement.classList.add('overflow-hidden'); // stop the page behind from scrolling
   }
 
-  // Really close the dialog, let the page scroll again, and return focus to the card's button
+  // Really close the dialog, let the page scroll again, and return focus to the carousel
   function finishClose() {
     modal.classList.remove('is-closing');
     modal.close();
     document.documentElement.classList.remove('overflow-hidden');
-    if (lastButton) lastButton.focus();
+    if (returnFocusTo) returnFocusTo.focus();
   }
 
   // Play the closing animation first, then close
@@ -83,9 +81,9 @@ function initProjectModal() {
     setTimeout(finishClosing, 300);
   }
 
-  // Open buttons on each card
-  document.querySelectorAll('[data-open-project]').forEach((button) => {
-    button.addEventListener('click', () => openModal(button));
+  // The carousel asks to open a project (event.detail = { card, returnFocusTo })
+  document.addEventListener('open-project', (event) => {
+    openModal(event.detail.card, event.detail.returnFocusTo);
   });
 
   // Close buttons inside the modal (the X button)

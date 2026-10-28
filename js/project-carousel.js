@@ -4,8 +4,9 @@
 //   - #project-carousel (the stage) with <article data-project> slides inside
 //   - #carousel-prev, #carousel-next, #carousel-dots
 //   - #carousel-info, #carousel-tag, #carousel-title, #carousel-description, #carousel-tools
-// The "View Project" button below the carousel is handled by js/project-modal.js
-// (it opens the slide that has the .is-active class)
+// Clicking the center card (or pressing Enter) sends an "open-project" event;
+// js/project-modal.js listens for it and opens the pop-up.
+// The hover glow/zoom on the center card is CSS in index.html (.is-active:hover)
 // =========================================================
 
 function initProjectCarousel() {
@@ -104,6 +105,13 @@ function initProjectCarousel() {
   prevButton.addEventListener('click', () => goTo(active - 1));
   nextButton.addEventListener('click', () => goTo(active + 1));
 
+  // Ask js/project-modal.js to open the center project's pop-up
+  function openActiveProject() {
+    document.dispatchEvent(new CustomEvent('open-project', {
+      detail: { card: slides[active], returnFocusTo: stage },
+    }));
+  }
+
   let justSwiped = false; // a swipe also fires a click; this stops it from moving twice
 
   // Click a side card to bring it to the center; click the center card to open its pop-up
@@ -114,17 +122,18 @@ function initProjectCarousel() {
         return;
       }
       if (index === active) {
-        document.querySelector('#carousel-view-project').click();
+        openActiveProject();
       } else {
         goTo(index);
       }
     });
   });
 
-  // Keyboard: left / right arrow keys when the carousel has focus
+  // Keyboard (when the carousel has focus): left / right arrows browse, Enter opens the pop-up
   stage.addEventListener('keydown', (event) => {
     if (event.key === 'ArrowLeft') goTo(active - 1);
     if (event.key === 'ArrowRight') goTo(active + 1);
+    if (event.key === 'Enter') openActiveProject();
   });
 
   // Touch / mouse swipe

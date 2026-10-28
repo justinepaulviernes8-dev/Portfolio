@@ -52,6 +52,21 @@
       box-shadow: 0 0 24px 6px rgb(59 130 246 / 0.7), inset 0 0 40px 8px rgb(59 130 246 / 0.45);
     }
 
+    /* Hover on the center project card: blue glow + the picture zooms in a little.
+       (.is-active is added to the center card by js/project-carousel.js) */
+    #project-carousel [data-project] img {
+      transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    #project-carousel [data-project].is-active:hover {
+      box-shadow: 0 0 0 3px rgb(59 130 246), 0 25px 60px -12px rgb(37 99 235 / 0.6);
+    }
+    #project-carousel [data-project].is-active:hover img {
+      transform: scale(1.08);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #project-carousel [data-project].is-active:hover img { transform: none; }
+    }
+
     /* Scroll animation: js/scroll-reveal.js adds .reveal-ready to <html> and .is-visible to each item */
     .reveal-ready [data-reveal] {
       opacity: 0;
@@ -299,70 +314,70 @@
 
         <!-- 3D carousel (js/project-carousel.js). To add a project, copy one <article> block. -->
         <div data-reveal>
-          <div id="project-carousel" tabindex="0" aria-roledescription="carousel" aria-label="Projects (use the left and right arrow keys)"
-            class="relative mx-auto h-[min(25rem,56vw)] touch-pan-y rounded-2xl [perspective:1200px] focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-blue-600">
-            <!-- Project 1 -->
-            <article data-project data-details="[Longer description for project 1: the goal, how you built it, a challenge you solved, and what you learned.]"
-              class="absolute top-1/2 left-1/2 w-[min(36rem,78vw)] cursor-pointer overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl shadow-slate-900/25 transition-[transform,opacity,filter] duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)] select-none motion-reduce:transition-none dark:border-slate-700 dark:bg-slate-950">
-              <img src="images/projects/project-1.svg" alt="[Describe the screenshot of project 1]" draggable="false" class="aspect-[16/10] w-full object-cover">
+          <div id="project-carousel" tabindex="0" aria-roledescription="carousel" aria-label="Projects (left and right arrow keys to browse, Enter to open)"
+            class="relative mx-auto h-[min(22rem,50vw)] touch-pan-y rounded-2xl [perspective:1200px] focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-blue-600">
+            <!-- Project 1: Campus Found: Lost & Found System -->
+            <article data-project data-details="Campus Found helps students and staff report lost and found items on campus and get them back to their owners. Its slogan is &quot;Find it. Report it. Return it.&quot; [Add your role, a challenge you solved, and what you learned.]"
+              class="absolute top-1/2 left-1/2 w-[min(36rem,78vw)] cursor-pointer overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl shadow-slate-900/25 transition-[transform,opacity,filter,box-shadow] duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)] select-none motion-reduce:transition-none dark:border-slate-700 dark:bg-slate-950">
+              <img src="images/projects/Laravel.png" alt="Campus Found admin login page with a &quot;Find it. Report it. Return it.&quot; headline over a photo of the campus" loading="lazy" draggable="false" class="aspect-video w-full bg-[#e9ecdf] object-contain">
               <!-- Text for the panel below and the pop-up (hidden on the card itself) -->
               <div class="hidden">
-                <span data-tag>Web Design</span>
-                <h3 data-title>[Project Title 1]</h3>
-                <p data-description>[Short description: what you made, the problem it solves, and your role.]</p>
-                <p data-tools><span>Tools:</span><span>HTML</span><span>Tailwind CSS</span><span>JavaScript</span></p>
+                <span data-tag>Web Development</span>
+                <h3 data-title>Campus Found: Lost &amp; Found System</h3>
+                <p data-description>A campus lost-and-found web system where people can report, find and return lost items, with an admin login.</p>
+                <p data-tools><span>Tools:</span><span>Laravel</span><span>PHP</span></p>
               </div>
             </article>
 
-            <!-- Project 2 -->
-            <article data-project data-details="[Longer description for project 2: the goal, how you built it, a challenge you solved, and what you learned.]"
-              class="absolute top-1/2 left-1/2 w-[min(36rem,78vw)] cursor-pointer overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl shadow-slate-900/25 transition-[transform,opacity,filter] duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)] select-none motion-reduce:transition-none dark:border-slate-700 dark:bg-slate-950">
-              <img src="images/projects/project-2.svg" alt="[Describe the screenshot of project 2]" draggable="false" class="aspect-[16/10] w-full object-cover">
+            <!-- Project 2: Road Blazer: Mobile Car Game -->
+            <article data-project data-details="Road Blazer is a car racing game for phones with a moving road, a score and a high score. I built it in Flutter and ran it on an Android emulator while developing. [Add your role, a challenge you solved, and what you learned.]"
+              class="absolute top-1/2 left-1/2 w-[min(36rem,78vw)] cursor-pointer overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl shadow-slate-900/25 transition-[transform,opacity,filter,box-shadow] duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)] select-none motion-reduce:transition-none dark:border-slate-700 dark:bg-slate-950">
+              <img src="images/projects/FlutterAndDart.png" alt="VS Code with Flutter code for the Road Blazer car game, running in an Android phone emulator" loading="lazy" draggable="false" class="aspect-video w-full object-cover">
               <!-- Text for the panel below and the pop-up (hidden on the card itself) -->
               <div class="hidden">
-                <span data-tag>School Activity</span>
-                <h3 data-title>[Project Title 2]</h3>
-                <p data-description>[Short description: what you made, the problem it solves, and your role.]</p>
-                <p data-tools><span>Tools:</span><span>Canva</span><span>Figma</span></p>
+                <span data-tag>Mobile App</span>
+                <h3 data-title>Road Blazer: Mobile Car Game</h3>
+                <p data-description>A mobile car racing game built with Flutter and Dart, tested on an Android emulator.</p>
+                <p data-tools><span>Tools:</span><span>Flutter</span><span>Dart</span><span>VS Code</span></p>
               </div>
             </article>
 
-            <!-- Project 3 -->
-            <article data-project data-details="[Longer description for project 3: the goal, how you built it, a challenge you solved, and what you learned.]"
-              class="absolute top-1/2 left-1/2 w-[min(36rem,78vw)] cursor-pointer overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl shadow-slate-900/25 transition-[transform,opacity,filter] duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)] select-none motion-reduce:transition-none dark:border-slate-700 dark:bg-slate-950">
-              <img src="images/projects/project-3.svg" alt="[Describe the screenshot of project 3]" draggable="false" class="aspect-[16/10] w-full object-cover">
+            <!-- Project 3: Car Game UI Design -->
+            <article data-project data-details="A set of iPhone screen designs for a car game, made in Figma before building it. It includes the start screen, in-game controls, a settings panel with an exit confirmation, a side menu, mail, friends and a leaderboard. [Add your role, a challenge you solved, and what you learned.]"
+              class="absolute top-1/2 left-1/2 w-[min(36rem,78vw)] cursor-pointer overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl shadow-slate-900/25 transition-[transform,opacity,filter,box-shadow] duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)] select-none motion-reduce:transition-none dark:border-slate-700 dark:bg-slate-950">
+              <img src="images/projects/Figma.png" alt="Figma file with phone screen designs for a car game: start screen, settings, exit pop-up, menu, mail, friends and leaderboard" loading="lazy" draggable="false" class="aspect-video w-full object-cover">
               <!-- Text for the panel below and the pop-up (hidden on the card itself) -->
               <div class="hidden">
-                <span data-tag>Group Project</span>
-                <h3 data-title>[Project Title 3]</h3>
-                <p data-description>[Short description: what you made, the problem it solves, and your role.]</p>
-                <p data-tools><span>Tools:</span><span>HTML</span><span>CSS</span><span>GitHub</span></p>
+                <span data-tag>UI/UX Design</span>
+                <h3 data-title>Car Game UI Design</h3>
+                <p data-description>Mobile screen designs for a car game in Figma: start screen, settings, menu, mail, friends and a leaderboard.</p>
+                <p data-tools><span>Tools:</span><span>Figma</span></p>
               </div>
             </article>
 
-            <!-- Project 4 -->
-            <article data-project data-details="[Longer description for project 4: the goal, how you built it, a challenge you solved, and what you learned.]"
-              class="absolute top-1/2 left-1/2 w-[min(36rem,78vw)] cursor-pointer overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl shadow-slate-900/25 transition-[transform,opacity,filter] duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)] select-none motion-reduce:transition-none dark:border-slate-700 dark:bg-slate-950">
-              <img src="images/projects/project-4.svg" alt="[Describe the screenshot of project 4]" draggable="false" class="aspect-[16/10] w-full object-cover">
+            <!-- Project 4: Low-Poly Lighthouse -->
+            <article data-project data-details="A 3D scene of a lighthouse on a grassy island with low-poly trees, built from simple shapes in Blender and lit to show the lighthouse beam. [Add your role, a challenge you solved, and what you learned.]"
+              class="absolute top-1/2 left-1/2 w-[min(36rem,78vw)] cursor-pointer overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl shadow-slate-900/25 transition-[transform,opacity,filter,box-shadow] duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)] select-none motion-reduce:transition-none dark:border-slate-700 dark:bg-slate-950">
+              <img src="images/projects/Blender.png" alt="Blender scene of a low-poly lighthouse on a green island with trees, on a dark blue grid" loading="lazy" draggable="false" class="aspect-video w-full object-cover">
               <!-- Text for the panel below and the pop-up (hidden on the card itself) -->
               <div class="hidden">
-                <span data-tag>Personal Build</span>
-                <h3 data-title>[Project Title 4]</h3>
-                <p data-description>[Short description: what you made, the problem it solves, and your role.]</p>
-                <p data-tools><span>Tools:</span><span>HTML</span><span>Tailwind CSS</span></p>
+                <span data-tag>3D Modeling</span>
+                <h3 data-title>Low-Poly Lighthouse</h3>
+                <p data-description>A low-poly 3D lighthouse on a small island with trees, modeled and lit in Blender.</p>
+                <p data-tools><span>Tools:</span><span>Blender</span></p>
               </div>
             </article>
 
-            <!-- Project 5 -->
-            <article data-project data-details="[Longer description for project 5: the goal, how you built it, a challenge you solved, and what you learned.]"
-              class="absolute top-1/2 left-1/2 w-[min(36rem,78vw)] cursor-pointer overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl shadow-slate-900/25 transition-[transform,opacity,filter] duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)] select-none motion-reduce:transition-none dark:border-slate-700 dark:bg-slate-950">
-              <img src="images/projects/project-5.svg" alt="[Describe the screenshot of project 5]" draggable="false" class="aspect-[16/10] w-full object-cover">
+            <!-- Project 5: Milkshake Ordering System -->
+            <article data-project data-details="A point-of-sale style app with 9 milkshake flavors. Each item has a quantity counter, and the app shows the total, takes the cash amount, computes the balance and makes a receipt. [Add your role, a challenge you solved, and what you learned.]"
+              class="absolute top-1/2 left-1/2 w-[min(36rem,78vw)] cursor-pointer overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl shadow-slate-900/25 transition-[transform,opacity,filter,box-shadow] duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)] select-none motion-reduce:transition-none dark:border-slate-700 dark:bg-slate-950">
+              <img src="images/projects/NetBeansGUI.png" alt="Java desktop app for ordering milkshakes, with 9 milkshake buttons, quantity counters, total, cash, balance, Pay and Receipt buttons" loading="lazy" draggable="false" class="aspect-video w-full object-cover">
               <!-- Text for the panel below and the pop-up (hidden on the card itself) -->
               <div class="hidden">
-                <span data-tag>Planned Project</span>
-                <h3 data-title>[Project Title 5]</h3>
-                <p data-description>[Short description: what you made, the problem it solves, and your role.]</p>
-                <p data-tools><span>Tools:</span><span>JavaScript</span></p>
+                <span data-tag>Desktop App</span>
+                <h3 data-title>Milkshake Ordering System</h3>
+                <p data-description>A Java desktop ordering system for a milkshake shop that counts orders and computes the total, cash and change.</p>
+                <p data-tools><span>Tools:</span><span>Java</span><span>NetBeans</span></p>
               </div>
             </article>
           </div>
@@ -386,11 +401,6 @@
             <h3 id="carousel-title" class="text-2xl leading-snug font-bold sm:text-3xl"></h3>
             <p id="carousel-description" class="text-gray-600 dark:text-slate-400"></p>
             <ul id="carousel-tools" class="flex flex-wrap justify-center gap-2" aria-label="Tools used"></ul>
-            <button id="carousel-view-project" type="button" data-open-project
-              class="group mt-1 inline-flex min-h-11 items-center gap-2 border-b-2 border-current font-semibold transition hover:text-blue-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-600 dark:hover:text-blue-300">
-              View Project
-              <svg class="size-4 transition-transform group-hover:translate-x-1 motion-reduce:transition-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </button>
           </div>
         </div>
       </div>
@@ -401,7 +411,7 @@
     <dialog id="project-modal" aria-labelledby="modal-title"
       class="m-auto max-h-[calc(100svh-2rem)] w-[min(56rem,calc(100%-2rem))] overflow-y-auto [scrollbar-width:none] rounded-3xl [&::-webkit-scrollbar]:hidden bg-white p-0 text-slate-900 shadow-2xl backdrop:bg-slate-950/60 backdrop:backdrop-blur-sm dark:bg-slate-900 dark:text-slate-100">
       <div class="relative">
-        <img id="modal-image" src="images/projects/project-1.svg" alt="" class="aspect-[16/9] w-full bg-blue-100 object-cover">
+        <img id="modal-image" src="images/projects/Laravel.png" alt="" class="aspect-video w-full bg-slate-950 object-contain">
         <button type="button" data-close-modal aria-label="Close project"
           class="absolute top-4 right-4 grid size-11 place-items-center rounded-full bg-white/90 text-slate-900 shadow-md transition hover:scale-105 hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
           <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
