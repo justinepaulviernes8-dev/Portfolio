@@ -1,0 +1,57 @@
+[
+  {
+    "title": "Campus Found: Lost & Found System",
+    "category": "Web Development",
+    "description": "A campus lost-and-found web system where people can report, find and return lost items, with an admin login.",
+    "details": "Campus Found helps students and staff report lost and found items on campus and get them back to their owners. Its slogan is \"Find it. Report it. Return it.\" [Add your role, a challenge you solved, and what you learned.]",
+    "tech_stack": "Laravel, PHP",
+    "image_path": "images/projects/Laravel.png",
+    "image_alt": "Campus Found admin login page with a \"Find it. Report it. Return it.\" headline over a photo of the campus",
+    "image_fit": "contain",
+    "display_order": 0
+  },
+  {
+    "title": "Road Blazer: Mobile Car Game",
+    "category": "Mobile App",
+    "description": "A mobile car racing game built with Flutter and Dart, tested on an Android emulator.",
+    "details": "Road Blazer is a car racing game for phones with a moving road, a score and a high score. I built it in Flutter and ran it on an Android emulator while developing. [Add your role, a challenge you solved, and what you learned.]",
+    "tech_stack": "Flutter, Dart, VS Code",
+    "image_path": "images/projects/FlutterAndDart.png",
+    "image_alt": "VS Code with Flutter code for the Road Blazer car game, running in an Android phone emulator",
+    "image_fit": "cover",
+    "display_order": 1
+  },
+  {
+    "title": "Car Game UI Design",
+    "category": "UI/UX Design",
+    "description": "Mobile screen designs for a car game in Figma: start screen, settings, menu, mail, friends and a leaderboard.",
+    "details": "A set of iPhone screen designs for a car game, made in Figma before building it. It includes the start screen, in-game controls, a settings panel with an exit confirmation, a side menu, mail, friends and a leaderboard. [Add your role, a challenge you solved, and what you learned.]",
+    "tech_stack": "Figma",
+    "image_path": "images/projects/Figma.png",
+    "image_alt": "Figma file with phone screen designs for a car game: start screen, settings, exit pop-up, menu, mail, friends and leaderboard",
+    "image_fit": "cover",
+    "display_order": 2
+  },
+  {
+    "title": "Low-Poly Lighthouse",
+    "category": "3D Modeling",
+    "description": "A low-poly 3D lighthouse on a small island with trees, modeled and lit in Blender.",
+    "details": "A 3D scene of a lighthouse on a grassy island with low-poly trees, built from simple shapes in Blender and lit to show the lighthouse beam. [Add your role, a challenge you solved, and what you learned.]",
+    "tech_stack": "Blender",
+    "image_path": "images/projects/Blender.png",
+    "image_alt": "Blender scene of a low-poly lighthouse on a green island with trees, on a dark blue grid",
+    "image_fit": "cover",
+    "display_order": 3
+  },
+  {
+    "title": "Milkshake Ordering System",
+    "category": "Desktop App",
+    "description": "A Java desktop ordering system for a milkshake shop that counts orders and computes the total, cash and change.",
+    "details": "A point-of-sale style app with 9 milkshake flavors. Each item has a quantity counter, and the app shows the total, takes the cash amount, computes the balance and makes a receipt. [Add your role, a challenge you solved, and what you learned.]",
+    "tech_stack": "Java, NetBeans",
+    "image_path": "images/projects/NetBeansGUI.png",
+    "image_alt": "Java desktop app for ordering milkshakes, with 9 milkshake buttons, quantity counters, total, cash, balance, Pay and Receipt buttons",
+    "image_fit": "cover",
+    "display_order": 4
+  }
+]

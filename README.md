@@ -1,4 +1,99 @@
-# Justine Paul Viernes — Portfolio
+# Justine Paul Viernes — Laravel Portfolio
+
+IT ELEC01 – Advanced Web Development, Block 4. Midterm: Portfolio CRUD with Validation.
+
+## Run the converted portfolio
+
+The working application uses Laravel 12, Inertia.js 2, React 19, Tailwind CSS 4, and XAMPP MySQL/MariaDB. Your original `index.html`, `js/`, and `images/` remain as the static design reference; opening `index.html` does **not** run the database-backed version.
+
+Start **MySQL** in the XAMPP Control Panel. The database is **`viernes_portfolio`**. In the public portfolio, scroll to **Projects**: use **Add project** above the carousel, or click the middle carousel image to find **Edit project** / **Delete project** inside its details popup. The forms open directly on the portfolio. The separate Index/Create/Edit pages remain available for the assignment.
+
+After the initial setup below, run this in PowerShell from the project folder:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/serve.ps1
+```
+
+- Public portfolio: http://127.0.0.1:8000
+- Project manager: http://127.0.0.1:8000/projects
+- Stop the server with Ctrl+C. Use `-Port 8001` if port 8000 is busy.
+
+The launcher uses PHP from XAMPP when present and sets upload limits for the 4 MB image validator. It only listens on localhost. It does not change your system PHP configuration.
+
+## Initial setup on another computer
+
+Requires PHP 8.2+ with PDO MySQL, PDO SQLite (for isolated tests and importing the old database), mbstring, XML, fileinfo, cURL and GD; Composer; and Node.js 20.19+ or 22.12+ with npm. Start MySQL in XAMPP before setup. The dependency lockfiles are included. Development was verified with PHP 8.5 and Node 24; Composer resolves dependencies against PHP 8.2 for classroom compatibility.
+
+```powershell
+composer install
+Copy-Item .env.example .env
+php artisan key:generate
+php scripts/setup-mysql.php
+php artisan storage:link
+npm ci
+npm run build
+powershell -ExecutionPolicy Bypass -File scripts/serve.ps1
+```
+
+Only copy `.env.example` and generate an application key during initial setup. Configure the `DB_*` settings for your own XAMPP credentials if they differ from the local defaults. `setup-mysql.php` creates the configured database and runs migrations; if the table is empty, it imports existing SQLite projects or seeds the original five. It never overwrites existing MySQL projects. Do not overwrite an existing `.env` or run `migrate:fresh` on data you want to keep. `npm run build` copies the original images into `public/images` before compiling the frontend. If Windows blocks `storage:link`, enable Developer Mode or run that single command in an elevated terminal, then confirm `public/storage` points to `storage/app/public`.
+
+The previous SQLite database remains at `database/database.sqlite`; an additional pre-conversion backup and environment copy are in the ignored `.local/before-xampp-mysql/` folder. The application now reads and writes MariaDB. In phpMyAdmin, select `viernes_portfolio` and open `projects` to inspect the records. Apache is needed for phpMyAdmin, while the portfolio itself uses the PHP launch script above.
+
+On macOS/Linux use `cp .env.example .env` instead of `Copy-Item`, then run a local server from the public directory:
+
+```sh
+cd public
+php -d upload_max_filesize=8M -d post_max_size=12M -S 127.0.0.1:8000 ../vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php
+```
+
+For frontend editing, run `npm run dev` in a second terminal while the PHP server runs. Rebuild with `npm run build` after editing if Vite is not running. The existing portfolio design, images, fonts, dark/light mode, mobile menu, scroll reveal, 3D carousel and project popup are retained.
+
+## Implemented requirements
+
+- Projects database table with nine meaningful fields, Eloquent `$fillable`, and a dedicated resource controller.
+- Index/Create/Edit pages, shared form and field components, inline errors and retained input.
+- Required, string, min/max, integer, between, unique, in, image, and MIME validation; custom messages.
+- Unique title and display-order validation ignore the current model on update. Display-order conflicts appear immediately as the number changes.
+- JPG/PNG/WebP uploads up to 4 MB; optional replacement on edit; cleanup of replaced/deleted uploads.
+- Create/update/delete success messages dismiss after four seconds; deletion requires a keyboard-accessible confirmation dialog. Save changes is disabled until a field changes.
+- Add, edit and delete controls directly in the portfolio's Projects section, using the same reusable form and Laravel resource endpoints.
+- Public carousel reads sorted database records, including safe empty/one/many-record rendering.
+- Original five projects seeded with their original text, images and order.
+
+Management routes are for local review/classroom demonstration and are not login-protected (authentication is optional in the rubric). Add authentication and authorization before exposing the project manager on a public server. Publishing this source repository does not deploy the Laravel application.
+
+## Tests and submission material
+
+```powershell
+php artisan test
+# Or invoke PHPUnit directly:
+php vendor/phpunit/phpunit/phpunit --log-junit tmp/test-results.xml
+npm run build
+```
+
+The default automated tests use an isolated in-memory SQLite database and fake upload storage. MySQL integration tests use the separately named `viernes_portfolio_test` database via `phpunit.mysql.xml`. They do not delete your development projects. See `docs/VALIDATION-TESTS.md` for recorded cases and `docs/VIDEO-GUIDE.md` for the required uncut live change and explanation checklist. `docs/IMPLEMENTATION.md` describes the fields and design choices. The documentation PDF is generated at `output/pdf/Midterm-Documentation-Draft.pdf` by `scripts/build-documentation.py` (requires Python, reportlab and Pillow).
+
+To run the MySQL integration suite, create an empty database named `viernes_portfolio_test` in XAMPP and run `php vendor/phpunit/phpunit/phpunit -c phpunit.mysql.xml`. That dedicated test database is reset by the test runner; never change its configuration to point at your working database.
+
+Before final submission, personalize the reflection and code explanations, finish any existing portfolio content placeholders, record the video in your own voice, add its viewable link, then regenerate the PDF. The existing Git remote is `https://github.com/justinepaulviernes8-dev/Portfolio.git`.
+
+## Important files
+
+| Purpose | Location |
+|---|---|
+| Public entry point | `routes/web.php`, `PortfolioController.php`, `resources/js/Pages/Portfolio.jsx` |
+| CRUD and validation | `app/Http/Controllers/ProjectController.php` |
+| Model | `app/Models/Project.php` |
+| Schema and original data | `database/migrations/2026_11_01_000001_create_projects_table.php`, `database/seeders/` |
+| Management screens | `resources/js/Pages/Projects/` |
+| Shared form | `resources/js/Components/ProjectForm.jsx`, `FormField.jsx` |
+| Public carousel and modal | `resources/js/Components/ProjectsCarousel.jsx`, `ProjectModal.jsx` |
+| Original interactions with React cleanup | `resources/js/Hooks/usePortfolioEffects.js` |
+| Styling | `resources/css/app.css` |
+
+## Original static portfolio notes
+
+The following notes describe the preserved pre-conversion files, not the Laravel application.
 
 Personal portfolio website for IT ELEC01 – Advanced Web Development.
 
