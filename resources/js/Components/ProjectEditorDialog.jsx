@@ -19,7 +19,7 @@ export default function ProjectEditorDialog({ editor, onClose }) {
 
     return <dialog ref={dialog} aria-labelledby="project-editor-title"
         onCancel={(event) => { event.preventDefault(); if (!processing) onClose(); }}
-        className="m-auto max-h-[calc(100svh-2rem)] w-[min(52rem,calc(100%-2rem))] overflow-y-auto rounded-3xl bg-white p-6 text-slate-900 shadow-2xl backdrop:bg-slate-950/60 backdrop:backdrop-blur-sm sm:p-8 dark:bg-slate-950 dark:text-slate-100">
+        className="m-auto max-h-[calc(100svh-2rem)] w-[min(52rem,calc(100%-2rem))] overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden rounded-3xl bg-white p-6 text-slate-900 shadow-2xl backdrop:bg-slate-950/60 backdrop:backdrop-blur-sm sm:p-8 dark:bg-slate-950 dark:text-slate-100">
         {editor && <>
             <div className="mb-6 flex items-start justify-between gap-4">
                 <div>
