@@ -11,7 +11,9 @@ Import this GitHub repository. Select **Container** (the root `Dockerfile.vercel
 
 ## External services required
 
-1. A hosted MySQL database with TLS, reachable from Vercel. Keep XAMPP's `viernes_portfolio` exclusively for local tests. Use a separate hosted test database for preview deployments.
+The selected live provider is **Supabase** (PostgreSQL and S3-compatible Storage). Local testing continues with XAMPP MySQL. Laravel supports both database drivers; set production `DB_CONNECTION=pgsql` rather than changing the local `.env`.
+
+1. A hosted database with TLS, reachable from Vercel. For Supabase, use the **Session pooler** connection parameters on port 5432. Keep XAMPP's `viernes_portfolio` exclusively for local tests. Use a separate hosted test database for preview deployments.
 2. An S3-compatible bucket for uploaded project screenshots. Give the application credentials scoped to that bucket. Allow public **read** of project images using the provider's public asset domain; never allow anonymous writes. `AWS_URL` is that public asset URL. Configure the storage region and API endpoint supplied by the provider.
 
 Original images and the profile video are bundled with the app. Newly uploaded images use object storage because container files are not durable across deployments or instances.
@@ -27,9 +29,11 @@ Set these in Vercel **Settings > Environment Variables**, scoped to Production. 
 | APP_DEBUG | false |
 | APP_URL | Your final HTTPS domain, without trailing slash |
 | APP_KEY | A new production key from `php artisan key:generate --show`; keep it stable |
-| DB_CONNECTION | mysql |
+| DB_CONNECTION | pgsql for Supabase (mysql for other MySQL providers) |
 | DB_HOST, DB_PORT | Hosted database endpoint and port |
 | DB_DATABASE, DB_USERNAME, DB_PASSWORD | Hosted database credentials |
+| DB_SSLMODE | require for Supabase |
+| DB_SEARCH_PATH | portfolio for Supabase; see the schema setup below |
 | MYSQL_ATTR_SSL_CA | `/etc/ssl/cert.pem` for providers using a public CA; for private CAs, configure the provider's certificate in the container |
 | SESSION_DRIVER | database |
 | SESSION_SECURE_COOKIE | true |
@@ -55,6 +59,17 @@ php artisan portfolio:password-hash
 The command prompts without showing the password. Paste the resulting hash, without extra quotes, into Vercel. No registration endpoint exists. Visit `/login` to sign in, then `/projects` or the public portfolio to manage records. Visitors can view project records, while create/edit/delete controls and their endpoints require the owner online. Changing the owner email or password hash revokes existing owner sessions. Login is rate limited using the shared database cache.
 
 ## Initialize the hosted database
+
+For Supabase, create a private application schema in the project's SQL editor before running Laravel migrations:
+
+```sql
+CREATE SCHEMA IF NOT EXISTS portfolio AUTHORIZATION postgres;
+REVOKE ALL ON SCHEMA portfolio FROM PUBLIC, anon, authenticated;
+```
+
+Set `DB_SEARCH_PATH=portfolio` in the deployment variables. Keep this schema out of Supabase Data API's exposed schemas. Laravel connects through its server-side database credentials; public clients do not need database table access. This also keeps owner sessions and cache records out of the public API schema. Do not reset the Supabase database or alter unrelated schemas.
+
+In Supabase Storage, create a bucket named `portfolio-projects` for public-read project screenshots. Use its S3-compatible endpoint and S3 access keys (not the publishable/anon API key) for the AWS variables. `AWS_URL` is the project's public object URL ending in `/storage/v1/object/public/portfolio-projects`, `AWS_BUCKET=portfolio-projects`, and `AWS_USE_PATH_STYLE_ENDPOINT=true`. Obtain the precise endpoint and region from Supabase's Storage settings. Enter the database password and storage credentials directly into Vercel; do not paste them into chat or commit them.
 
 Use a trusted terminal with the **hosted** credentials, not XAMPP credentials. One option is a temporary ignored `.env.production` file and Docker Desktop:
 
