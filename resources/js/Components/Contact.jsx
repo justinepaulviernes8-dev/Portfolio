@@ -12,6 +12,10 @@ export default function Contact() {
             <h3 className="text-2xl font-semibold">Get in touch</h3>
             <p>Feel free to reach out if you'd like to collaborate on projects, work together on school activities, or share ideas about web design!</p>
             <ul className="flex flex-col gap-4">
+              <li className="flex items-center gap-4">
+                <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-white/20"><svg className="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2" /><path d="M11 18h2" /></svg></span>
+                <span><span className="block text-sm">Mobile number</span><span className="font-semibold">09811692176</span></span>
+              </li>
               <li>
                 <a href="mailto:your.email@example.com" className="flex items-center gap-4 rounded-xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
                   <span className="grid size-11 place-items-center rounded-xl bg-white/20"><svg className="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" /><path d="m22 6-10 7L2 6" /></svg></span>
