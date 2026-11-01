@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { router } from '@inertiajs/react';
+import { router, usePage } from '@inertiajs/react';
 import SectionTitle from './SectionTitle';
 import ProjectModal from './ProjectModal';
 import ProjectEditorDialog from './ProjectEditorDialog';
@@ -16,6 +16,8 @@ const positions = {
 export const toolsFor = (project) => project.tech_stack.split(',').map((tool) => tool.trim()).filter(Boolean);
 
 export default function ProjectsCarousel({ projects }) {
+    const { management } = usePage().props;
+    const canManage = management?.canManage ?? false;
     const [active, setActive] = useState(0);
     const [selected, setSelected] = useState(null);
     const [infoIndex, setInfoIndex] = useState(0);
@@ -67,7 +69,7 @@ export default function ProjectsCarousel({ projects }) {
             <div className="mx-auto max-w-6xl 2xl:max-w-7xl px-4 sm:px-6">
                 <SectionTitle label="PROJECTS" title="School projects & activities" />
                 <div className="mb-8 flex flex-col items-center gap-4">
-                    <button ref={addButton} type="button" onClick={() => setEditor({ project: null })} className={primaryButton}>Add project</button>
+                    {canManage && <button ref={addButton} type="button" onClick={() => setEditor({ project: null })} className={primaryButton}>Add project</button>}
                     <SuccessMessage className="rounded-xl border border-blue-100 bg-blue-50 px-4 py-3 text-sm text-blue-700 dark:border-blue-900 dark:bg-blue-950 dark:text-blue-300" />
                 </div>
                 <div data-reveal="">
@@ -125,7 +127,7 @@ export default function ProjectsCarousel({ projects }) {
                 </div>
             </div>
         </section>
-        <ProjectModal project={selected}
+        <ProjectModal project={selected} canManage={canManage}
             onClose={() => { setSelected(null); stage.current?.focus({ preventScroll: true }); }}
             onEdit={(project) => { setSelected(null); setEditor({ project }); }}
             onDelete={(project) => { setSelected(null); setDeleteError(''); setDeleting(project); }} />

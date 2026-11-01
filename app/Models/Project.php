@@ -26,6 +26,6 @@ class Project extends Model
     {
         return str_starts_with($this->image_path, 'images/')
             ? asset($this->image_path)
-            : Storage::disk('public')->url($this->image_path);
+            : Storage::disk(config('portfolio.upload_disk'))->url($this->image_path);
     }
 }

@@ -14,6 +14,10 @@ class HandleInertiaRequests extends Middleware
         return [
             ...parent::share($request),
             'flash' => ['success' => fn () => $request->session()->get('success')],
+            'management' => [
+                'canManage' => \App\Support\OwnerAccess::canManage($request),
+                'authRequired' => \App\Support\OwnerAccess::required(),
+            ],
         ];
     }
 }

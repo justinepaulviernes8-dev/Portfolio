@@ -22,6 +22,8 @@ The launcher uses PHP from XAMPP when present and sets upload limits for the 4 M
 
 ## Initial setup on another computer
 
+For the full online app on Vercel, see [Vercel deployment](docs/VERCEL-DEPLOYMENT.md). Use the **Container** preset with `Dockerfile.vercel`, a hosted database, S3-compatible upload storage, and owner login. XAMPP stays available for local testing with separate credentials and records.
+
 Requires PHP 8.2+ with PDO MySQL, PDO SQLite (for isolated tests and importing the old database), mbstring, XML, fileinfo, cURL and GD; Composer; and Node.js 20.19+ or 22.12+ with npm. Start MySQL in XAMPP before setup. The dependency lockfiles are included. Development was verified with PHP 8.5 and Node 24; Composer resolves dependencies against PHP 8.2 for classroom compatibility.
 
 ```powershell
@@ -60,7 +62,7 @@ For frontend editing, run `npm run dev` in a second terminal while the PHP serve
 - Public carousel reads sorted database records, including safe empty/one/many-record rendering.
 - Original five projects seeded with their original text, images and order.
 
-Management routes are for local review/classroom demonstration and are not login-protected (authentication is optional in the rubric). Add authentication and authorization before exposing the project manager on a public server. Publishing this source repository does not deploy the Laravel application.
+Management routes stay available for local classroom review. Online deployments require the owner login at `/login`, and visitors cannot create, edit or delete projects. See `docs/VERCEL-DEPLOYMENT.md` for the owner email/password-hash configuration and external database/storage setup. Publishing this source repository does not deploy the Laravel application.
 
 ## Tests and submission material
 

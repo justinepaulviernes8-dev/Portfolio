@@ -29,12 +29,12 @@ class ProjectController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $data = $this->validatedData($request);
-        $path = $request->file('image')->store('projects', 'public');
+        $path = $request->file('image')->store('projects', config('portfolio.upload_disk'));
         unset($data['image']);
         try {
             Project::create([...$data, 'image_path' => $path]);
         } catch (\Throwable $exception) {
-            Storage::disk('public')->delete($path);
+            Storage::disk(config('portfolio.upload_disk'))->delete($path);
             throw $exception;
         }
         return $this->successResponse($request, 'Project created successfully.');
@@ -53,13 +53,13 @@ class ProjectController extends Controller
         $data = $this->validatedData($request, $project);
         $oldPath = $project->image_path;
         $newPath = $request->hasFile('image')
-            ? $request->file('image')->store('projects', 'public') : null;
+            ? $request->file('image')->store('projects', config('portfolio.upload_disk')) : null;
         unset($data['image']);
         if ($newPath) $data['image_path'] = $newPath;
         try {
             $project->update($data);
         } catch (\Throwable $exception) {
-            if ($newPath) Storage::disk('public')->delete($newPath);
+            if ($newPath) Storage::disk(config('portfolio.upload_disk'))->delete($newPath);
             throw $exception;
         }
         if ($newPath) $this->deleteUploadedImage($oldPath);
@@ -113,6 +113,6 @@ class ProjectController extends Controller
     private function deleteUploadedImage(string $path): void
     {
         // Original version-controlled images are never deleted by the manager.
-        if (str_starts_with($path, 'projects/')) Storage::disk('public')->delete($path);
+        if (str_starts_with($path, 'projects/')) Storage::disk(config('portfolio.upload_disk'))->delete($path);
     }
 }
