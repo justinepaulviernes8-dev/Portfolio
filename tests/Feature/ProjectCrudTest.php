@@ -76,7 +76,7 @@ class ProjectCrudTest extends TestCase
 
     public function test_order_requires_an_integer_in_range(): void
     {
-        foreach (['letters', 1.5, -1, 1000] as $value) {
+        foreach (['letters', 1.5, -1, 0, 101, 1000] as $value) {
             $this->post('/projects', $this->payload(['display_order' => $value]))->assertSessionHasErrors('display_order');
         }
         $this->assertDatabaseCount('projects', 0);
@@ -87,6 +87,39 @@ class ProjectCrudTest extends TestCase
         $project = $this->record();
         $this->post('/projects', $this->payload(['title' => $project->title]))->assertSessionHasErrors('title');
         $this->assertDatabaseCount('projects', 1);
+    }
+
+    public function test_zero_is_rejected_on_update_and_one_is_allowed(): void
+    {
+        $project = $this->record();
+        $this->put('/projects/'.$project->id, $this->payload(['image' => null, 'display_order' => 0]))
+            ->assertSessionHasErrors(['display_order' => 'Display order must be between 1 and 100. Choose a number other than 0.']);
+        $this->assertSame(5, $project->fresh()->display_order);
+        $this->put('/projects/'.$project->id, $this->payload(['image' => null, 'display_order' => 1]))->assertSessionHasNoErrors();
+        $this->assertSame(1, $project->fresh()->display_order);
+    }
+
+    public function test_display_order_one_hundred_is_allowed_but_one_hundred_one_is_rejected_on_update(): void
+    {
+        $this->post('/projects', $this->payload(['display_order' => 100]))->assertSessionHasNoErrors();
+        $project = Project::firstOrFail();
+        $this->assertSame(100, $project->display_order);
+        $this->put('/projects/'.$project->id, $this->payload(['image' => null, 'display_order' => 101]))->assertSessionHasErrors('display_order');
+        $this->assertSame(100, $project->fresh()->display_order);
+    }
+
+    public function test_legacy_order_migration_preserves_carousel_sequence(): void
+    {
+        $first = $this->record();
+        $first->update(['display_order' => 0]);
+        $second = $first->replicate();
+        $second->title = 'Second legacy project';
+        $second->display_order = 1;
+        $second->save();
+        $migration = require database_path('migrations/2026_11_03_000001_start_project_order_at_one.php');
+        $migration->up();
+        $this->assertSame([$first->id, $second->id], Project::orderBy('display_order')->pluck('id')->all());
+        $this->assertSame([1, 2], Project::orderBy('display_order')->pluck('display_order')->all());
     }
 
     public function test_create_rejects_another_projects_display_order(): void

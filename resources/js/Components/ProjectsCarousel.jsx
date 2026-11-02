@@ -1,11 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { router, usePage } from '@inertiajs/react';
 import SectionTitle from './SectionTitle';
 import ProjectModal from './ProjectModal';
-import ProjectEditorDialog from './ProjectEditorDialog';
-import DeleteConfirmation from './DeleteConfirmation';
-import SuccessMessage from './SuccessMessage';
-import { primaryButton } from '../Layouts/ManagementLayout';
 
 const positions = {
     0: { x: 0, s: 1, r: 0, o: 1, b: 1, z: 5 },
@@ -16,17 +11,10 @@ const positions = {
 export const toolsFor = (project) => project.tech_stack.split(',').map((tool) => tool.trim()).filter(Boolean);
 
 export default function ProjectsCarousel({ projects }) {
-    const { management } = usePage().props;
-    const canManage = management?.canManage ?? false;
     const [active, setActive] = useState(0);
     const [selected, setSelected] = useState(null);
     const [infoIndex, setInfoIndex] = useState(0);
     const [fading, setFading] = useState(false);
-    const [editor, setEditor] = useState(null);
-    const [deleting, setDeleting] = useState(null);
-    const [processingDelete, setProcessingDelete] = useState(false);
-    const [deleteError, setDeleteError] = useState('');
-    const addButton = useRef(null);
     const stage = useRef(null);
     const startX = useRef(null);
     const swiped = useRef(false);
@@ -44,34 +32,12 @@ export default function ProjectsCarousel({ projects }) {
     }
     function openActive() { if (projects[safeIndex]) setSelected(projects[safeIndex]); }
 
-    function closeEditor() {
-        const wasEditing = Boolean(editor?.project);
-        setEditor(null);
-        requestAnimationFrame(() => (wasEditing ? stage.current : addButton.current)?.focus({ preventScroll: true }));
-    }
-
-    function deleteProject() {
-        if (!deleting || processingDelete) return;
-        setProcessingDelete(true);
-        router.delete(`/projects/${deleting.id}`, {
-            data: { return_to: 'portfolio' },
-            preserveScroll: true,
-            onSuccess: () => { setDeleting(null); addButton.current?.focus({ preventScroll: true }); },
-            onError: () => setDeleteError('The project could not be deleted. Please try again.'),
-            onFinish: () => setProcessingDelete(false),
-        });
-    }
-
     const arrowClass = 'grid size-11 place-items-center rounded-full border border-gray-300 bg-white transition lg:hidden hover:scale-110 hover:border-blue-600 hover:text-blue-700 active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:border-slate-700 dark:bg-slate-950 dark:hover:text-blue-300';
 
     return <>
         <section id="projects" className="scroll-mt-20 overflow-x-clip bg-gray-100 py-20 md:py-24 dark:bg-slate-900">
             <div className="mx-auto max-w-6xl 2xl:max-w-7xl px-4 sm:px-6">
                 <SectionTitle label="PROJECTS" title="School projects & activities" />
-                <div className="mb-8 flex flex-col items-center gap-4">
-                    {canManage && <button ref={addButton} type="button" onClick={() => setEditor({ project: null })} className={primaryButton}>Add project</button>}
-                    <SuccessMessage className="rounded-xl border border-blue-100 bg-blue-50 px-4 py-3 text-sm text-blue-700 dark:border-blue-900 dark:bg-blue-950 dark:text-blue-300" />
-                </div>
                 <div data-reveal="">
                 {projects.length === 0 ? <p className="py-12 text-center text-gray-600 dark:text-slate-400">Projects will appear here when they are added.</p> : <div>
                     <div id="project-carousel" ref={stage} tabIndex={0} aria-roledescription="carousel" aria-label="Projects (left and right arrow keys to browse, Enter to open)"
@@ -127,11 +93,6 @@ export default function ProjectsCarousel({ projects }) {
                 </div>
             </div>
         </section>
-        <ProjectModal project={selected} canManage={canManage}
-            onClose={() => { setSelected(null); stage.current?.focus({ preventScroll: true }); }}
-            onEdit={(project) => { setSelected(null); setEditor({ project }); }}
-            onDelete={(project) => { setSelected(null); setDeleteError(''); setDeleting(project); }} />
-        {editor && <ProjectEditorDialog editor={editor} onClose={closeEditor} />}
-        <DeleteConfirmation project={deleting} processing={processingDelete} error={deleteError} onCancel={() => { setSelected(deleting); setDeleting(null); }} onConfirm={deleteProject} />
+        <ProjectModal project={selected} onClose={() => { setSelected(null); stage.current?.focus({ preventScroll: true }); }} />
     </>;
 }

@@ -8,7 +8,7 @@
     "image_path": "images/projects/Laravel.png",
     "image_alt": "Campus Found admin login page with a \"Find it. Report it. Return it.\" headline over a photo of the campus",
     "image_fit": "contain",
-    "display_order": 0
+    "display_order": 1
   },
   {
     "title": "Road Blazer: Mobile Car Game",
@@ -19,7 +19,7 @@
     "image_path": "images/projects/FlutterAndDart.png",
     "image_alt": "VS Code with Flutter code for the Road Blazer car game, running in an Android phone emulator",
     "image_fit": "cover",
-    "display_order": 1
+    "display_order": 2
   },
   {
     "title": "Car Game UI Design",
@@ -30,7 +30,7 @@
     "image_path": "images/projects/Figma.png",
     "image_alt": "Figma file with phone screen designs for a car game: start screen, settings, exit pop-up, menu, mail, friends and leaderboard",
     "image_fit": "cover",
-    "display_order": 2
+    "display_order": 3
   },
   {
     "title": "Low-Poly Lighthouse",
@@ -41,7 +41,7 @@
     "image_path": "images/projects/Blender.png",
     "image_alt": "Blender scene of a low-poly lighthouse on a green island with trees, on a dark blue grid",
     "image_fit": "cover",
-    "display_order": 3
+    "display_order": 4
   },
   {
     "title": "Milkshake Ordering System",
@@ -52,6 +52,6 @@
     "image_path": "images/projects/NetBeansGUI.png",
     "image_alt": "Java desktop app for ordering milkshakes, with 9 milkshake buttons, quantity counters, total, cash, balance, Pay and Receipt buttons",
     "image_fit": "cover",
-    "display_order": 4
+    "display_order": 5
   }
 ]

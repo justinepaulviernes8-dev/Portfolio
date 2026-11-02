@@ -14,10 +14,13 @@ export default function ProjectForm({ project = null, embedded = false, onSucces
         image: null,
     });
     const formElement = useRef(null);
+    const [submitted, setSubmitted] = useState(false);
     const orderValue = Number(form.data.display_order);
-    const orderTaken = form.data.display_order.trim() !== '' && Number.isInteger(orderValue)
+    const orderValid = form.data.display_order.trim() !== '' && Number.isInteger(orderValue) && orderValue >= 1 && orderValue <= 100;
+    const orderTaken = orderValid
         && (projectOrders ?? projects ?? []).some((item) => item.id !== project?.id && Number(item.display_order) === orderValue);
-    const orderError = orderTaken ? 'This number is already taken. Choose a different display order.' : form.errors.display_order;
+    const orderError = submitted && !orderValid ? 'Choose a whole number from 1 to 100. 0 cannot be submitted.'
+        : orderTaken ? 'This number is already taken. Choose a different display order.' : form.errors.display_order;
     const [preview, setPreview] = useState(project?.image_url ?? null);
     useEffect(() => { onProcessingChange?.(form.processing); }, [form.processing, onProcessingChange]);
     useEffect(() => {
@@ -43,7 +46,8 @@ export default function ProjectForm({ project = null, embedded = false, onSucces
     function submit(event) {
         event.preventDefault();
         if (form.processing || (editing && !form.isDirty)) return;
-        if (orderTaken) {
+        setSubmitted(true);
+        if (!orderValid || orderTaken) {
             formElement.current?.querySelector('[name="display_order"]')?.focus();
             return;
         }
@@ -67,7 +71,7 @@ export default function ProjectForm({ project = null, embedded = false, onSucces
         <FormField name="title" label="Project title" error={form.errors.title} hint="A unique title, up to 120 characters."><input {...attributes('title', true)} type="text" /></FormField>
         <div className="grid gap-6 sm:grid-cols-2">
             <FormField name="category" label="Category" error={form.errors.category} hint="For example: Web Development."><input {...attributes('category', true)} type="text" list="project-categories" /><datalist id="project-categories">{['Web Development','Mobile App','UI/UX Design','3D Modeling','Desktop App'].map((category) => <option key={category} value={category} />)}</datalist></FormField>
-            <FormField name="display_order" label="Display order" error={orderError} hint="Unique whole number from 0 to 999; lowest first."><input {...attributes('display_order', true)} type="number" min="0" max="999" step="1" /></FormField>
+            <FormField name="display_order" label="Display order" error={orderError} hint="Choose a unique whole number from 1 to 100; lowest first."><input {...attributes('display_order', true)} type="number" min="1" max="100" step="1" /></FormField>
         </div>
         <FormField name="description" label="Short description" error={form.errors.description} hint="10–500 characters, shown below the carousel."><textarea {...attributes('description', true)} rows={3} /></FormField>
         <FormField name="details" label="Project details" error={form.errors.details} hint="20–3,000 characters, shown in the project popup."><textarea {...attributes('details', true)} rows={5} /></FormField>

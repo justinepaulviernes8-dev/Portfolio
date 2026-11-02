@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { secondaryButton } from '../Layouts/ManagementLayout';
 
-export default function ProjectModal({ project, onClose, onEdit, onDelete, canManage = false }) {
+export default function ProjectModal({ project, onClose }) {
     const dialog = useRef(null);
     const timeout = useRef(null);
     const [closing, setClosing] = useState(false);
@@ -44,10 +43,6 @@ export default function ProjectModal({ project, onClose, onEdit, onDelete, canMa
                 <div><p className="mb-2 text-sm font-semibold">Tools used</p>
                     <ul id="modal-tools" className="flex flex-wrap gap-2">{project.tech_stack.split(',').map((tool, i) => <li key={i} className="rounded-lg bg-gray-100 px-3 py-1 text-sm font-medium dark:bg-slate-800">{tool.trim()}</li>)}</ul>
                 </div>
-                {canManage && <div className="flex flex-wrap gap-3 border-t border-gray-200 pt-4 dark:border-slate-700">
-                    <button type="button" onClick={() => onEdit(project)} className={secondaryButton}>Edit project</button>
-                    <button type="button" onClick={() => onDelete(project)} className="rounded-xl border border-red-200 px-5 py-3 font-semibold text-red-600 hover:bg-red-50 dark:border-red-900 dark:text-red-400 dark:hover:bg-red-950">Delete project</button>
-                </div>}
             </div>
         </>}
     </dialog>;

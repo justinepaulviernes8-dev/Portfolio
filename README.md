@@ -6,7 +6,7 @@ IT ELEC01 – Advanced Web Development, Block 4. Midterm: Portfolio CRUD with Va
 
 The working application uses Laravel 12, Inertia.js 2, React 19, Tailwind CSS 4, and XAMPP MySQL/MariaDB. Your original `index.html`, `js/`, and `images/` remain as the static design reference; opening `index.html` does **not** run the database-backed version.
 
-Start **MySQL** in the XAMPP Control Panel. The database is **`viernes_portfolio`**. In the public portfolio, scroll to **Projects**: use **Add project** above the carousel, or click the middle carousel image to find **Edit project** / **Delete project** inside its details popup. The forms open directly on the portfolio. The separate Index/Create/Edit pages remain available for the assignment.
+Start **MySQL** in the XAMPP Control Panel. The database is **`viernes_portfolio`**. View project records in the public portfolio's **Projects** carousel and details popup. To add, edit or delete projects, open the separate **Project manager** at `/projects`. Its Index/Create/Edit pages remain available for the assignment.
 
 After the initial setup below, run this in PowerShell from the project folder:
 
@@ -58,7 +58,7 @@ For frontend editing, run `npm run dev` in a second terminal while the PHP serve
 - Unique title and display-order validation ignore the current model on update. Display-order conflicts appear immediately as the number changes.
 - JPG/PNG/WebP uploads up to 4 MB; optional replacement on edit; cleanup of replaced/deleted uploads.
 - Create/update/delete success messages dismiss after four seconds; deletion requires a keyboard-accessible confirmation dialog. Save changes is disabled until a field changes.
-- Add, edit and delete controls directly in the portfolio's Projects section, using the same reusable form and Laravel resource endpoints.
+- Add, edit and delete controls in the separate Project manager, using a reusable form and Laravel resource endpoints. The main portfolio displays project records and their details.
 - Public carousel reads sorted database records, including safe empty/one/many-record rendering.
 - Original five projects seeded with their original text, images and order.
 

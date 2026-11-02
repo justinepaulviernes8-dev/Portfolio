@@ -219,6 +219,9 @@ function initFormValidation() {
     if (field.id === 'name') {
       if (value === '') return 'Please enter your name.';
       if (value.length < 2) return 'Your name should have at least 2 characters.';
+      if (!/^(?=.*\p{L})[\p{L}\p{M} .'\u2019-]+$/u.test(value)) {
+        return 'Please enter a valid name using letters, spaces, apostrophes, hyphens or periods. Numbers are not allowed.';
+      }
     }
     if (field.id === 'email') {
       if (value === '') return 'Please enter your email address.';
