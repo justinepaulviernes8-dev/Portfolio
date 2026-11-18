@@ -4,7 +4,22 @@ export default function Home() {
     return (
         <section id="home" className="flex min-h-[calc(100svh-69px)] scroll-mt-20 items-center">
       <div className="mx-auto grid w-full max-w-6xl 2xl:max-w-7xl items-center gap-10 px-4 py-12 sm:px-6 md:grid-cols-2 md:py-16">
-        <div data-reveal="" className="flex flex-col items-start gap-5">
+        <div data-reveal="" className="flex justify-center md:order-2">
+          
+          <div className="relative aspect-square w-[min(20rem,80vw,50svh)] lg:w-[min(26rem,52svh)]">
+            <div className="absolute inset-0 rounded-full bg-blue-50 dark:bg-blue-950" aria-hidden="true"></div>
+            
+            <ProfileVideoPreview />
+            <span className="pointer-events-none absolute -left-2 bottom-10 z-20 flex items-center gap-2 rounded-2xl border border-gray-200 bg-white px-4 py-2.5 text-sm font-semibold shadow-lg shadow-slate-900/5 dark:border-slate-700 dark:bg-slate-900">
+              <svg className="size-[18px] text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" /><path d="M3 9h18M9 21V9" /></svg>Web Design
+            </span>
+            <span className="pointer-events-none absolute -right-2 top-10 z-20 flex items-center gap-2 rounded-2xl border border-gray-200 bg-white px-4 py-2.5 text-sm font-semibold shadow-lg shadow-slate-900/5 dark:border-slate-700 dark:bg-slate-900">
+              <svg className="size-[18px] text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6" /></svg>HTML · Tailwind · JS
+            </span>
+          </div>
+        </div>
+
+        <div data-reveal="" className="flex flex-col items-start gap-5 md:order-1">
           <span className="inline-flex items-center gap-2 rounded-full bg-blue-50 px-4 py-1.5 text-sm font-medium text-blue-700 dark:bg-blue-950 dark:text-blue-300">
             <span className="size-2 rounded-full bg-blue-600" aria-hidden="true"></span>Welcome to my portfolio
           </span>
@@ -17,21 +32,6 @@ export default function Home() {
               <svg className="size-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
             </a>
             <a href="#contact" className="inline-flex items-center rounded-xl border-[1.5px] border-gray-300 px-6 py-3.5 font-semibold hover:border-blue-600 hover:text-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:border-slate-700 dark:hover:text-blue-300">Contact Me</a>
-          </div>
-        </div>
-
-        <div data-reveal="" className="order-first flex justify-center md:order-last">
-          
-          <div className="relative aspect-square w-[min(20rem,80vw,50svh)] lg:w-[min(26rem,52svh)]">
-            <div className="absolute inset-0 rounded-full bg-blue-50 dark:bg-blue-950" aria-hidden="true"></div>
-            
-            <ProfileVideoPreview />
-            <span className="pointer-events-none absolute -left-2 bottom-10 z-20 flex items-center gap-2 rounded-2xl border border-gray-200 bg-white px-4 py-2.5 text-sm font-semibold shadow-lg shadow-slate-900/5 dark:border-slate-700 dark:bg-slate-900">
-              <svg className="size-[18px] text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" /><path d="M3 9h18M9 21V9" /></svg>Web Design
-            </span>
-            <span className="pointer-events-none absolute -right-2 top-10 z-20 flex items-center gap-2 rounded-2xl border border-gray-200 bg-white px-4 py-2.5 text-sm font-semibold shadow-lg shadow-slate-900/5 dark:border-slate-700 dark:bg-slate-900">
-              <svg className="size-[18px] text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6" /></svg>HTML · Tailwind · JS
-            </span>
           </div>
         </div>
       </div>
