@@ -20,7 +20,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div data-reveal="" className="flex justify-center">
+        <div data-reveal="" className="order-first flex justify-center md:order-last">
           
           <div className="relative aspect-square w-[min(20rem,80vw,50svh)] lg:w-[min(26rem,52svh)]">
             <div className="absolute inset-0 rounded-full bg-blue-50 dark:bg-blue-950" aria-hidden="true"></div>
