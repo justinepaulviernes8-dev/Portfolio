@@ -15,29 +15,29 @@ export default function Skills() {
               </span>
               <h3 className="text-xl font-semibold">Technical Skills</h3>
             </div>
-            <ul className="grid gap-3 sm:grid-cols-2">
-              <li className="flex min-w-0 items-center gap-3 rounded-2xl border border-gray-200 p-3 sm:p-4 dark:border-slate-700">
-                <span className="grid size-10 place-items-center rounded-xl bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300"><svg className="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><path d="M14 2v6h6" /></svg></span>
+            <ul className="grid grid-cols-1 gap-3 min-[360px]:grid-cols-2">
+              <li className="flex min-w-0 flex-col items-start gap-2 rounded-2xl border border-gray-200 p-3 text-sm leading-snug break-words sm:flex-row sm:items-center sm:gap-3 sm:p-4 sm:text-base dark:border-slate-700">
+                <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300"><svg className="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><path d="M14 2v6h6" /></svg></span>
                 <span><span className="block font-semibold">HTML5</span></span>
               </li>
-              <li className="flex min-w-0 items-center gap-3 rounded-2xl border border-gray-200 p-3 sm:p-4 dark:border-slate-700">
-                <span className="grid size-10 place-items-center rounded-xl bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300"><svg className="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2" /></svg></span>
+              <li className="flex min-w-0 flex-col items-start gap-2 rounded-2xl border border-gray-200 p-3 text-sm leading-snug break-words sm:flex-row sm:items-center sm:gap-3 sm:p-4 sm:text-base dark:border-slate-700">
+                <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300"><svg className="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2" /></svg></span>
                 <span><span className="block font-semibold">Tailwind CSS</span></span>
               </li>
-              <li className="flex min-w-0 items-center gap-3 rounded-2xl border border-gray-200 p-3 sm:p-4 dark:border-slate-700">
-                <span className="grid size-10 place-items-center rounded-xl bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300"><svg className="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6" /></svg></span>
+              <li className="flex min-w-0 flex-col items-start gap-2 rounded-2xl border border-gray-200 p-3 text-sm leading-snug break-words sm:flex-row sm:items-center sm:gap-3 sm:p-4 sm:text-base dark:border-slate-700">
+                <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300"><svg className="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6" /></svg></span>
                 <span><span className="block font-semibold">JavaScript</span></span>
               </li>
-              <li className="flex min-w-0 items-center gap-3 rounded-2xl border border-gray-200 p-3 sm:p-4 dark:border-slate-700">
-                <span className="grid size-10 place-items-center rounded-xl bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300"><svg className="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="18" cy="18" r="3" /><circle cx="6" cy="6" r="3" /><path d="M6 21V9a9 9 0 0 0 9 9" /></svg></span>
+              <li className="flex min-w-0 flex-col items-start gap-2 rounded-2xl border border-gray-200 p-3 text-sm leading-snug break-words sm:flex-row sm:items-center sm:gap-3 sm:p-4 sm:text-base dark:border-slate-700">
+                <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300"><svg className="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="18" cy="18" r="3" /><circle cx="6" cy="6" r="3" /><path d="M6 21V9a9 9 0 0 0 9 9" /></svg></span>
                 <span><span className="block font-semibold">Git &amp; GitHub</span></span>
               </li>
-              <li className="flex min-w-0 items-center gap-3 rounded-2xl border border-gray-200 p-3 sm:p-4 dark:border-slate-700">
-                <span className="grid size-10 place-items-center rounded-xl bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300"><svg className="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" /><path d="M3 9h18M9 21V9" /></svg></span>
+              <li className="flex min-w-0 flex-col items-start gap-2 rounded-2xl border border-gray-200 p-3 text-sm leading-snug break-words sm:flex-row sm:items-center sm:gap-3 sm:p-4 sm:text-base dark:border-slate-700">
+                <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300"><svg className="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" /><path d="M3 9h18M9 21V9" /></svg></span>
                 <span><span className="block font-semibold">Canva</span></span>
               </li>
-              <li className="flex min-w-0 items-center gap-3 rounded-2xl border border-gray-200 p-3 sm:p-4 dark:border-slate-700">
-                <span className="grid size-10 place-items-center rounded-xl bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300"><svg className="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 2H8.5a3.5 3.5 0 0 0 0 7H12zM12 2h3.5a3.5 3.5 0 1 1 0 7H12zM12 9H8.5a3.5 3.5 0 0 0 0 7H12zM12 16H8.5a3.5 3.5 0 1 0 3.5 3.5zM12 12.5a3.5 3.5 0 1 0 7 0 3.5 3.5 0 1 0-7 0" /></svg></span>
+              <li className="flex min-w-0 flex-col items-start gap-2 rounded-2xl border border-gray-200 p-3 text-sm leading-snug break-words sm:flex-row sm:items-center sm:gap-3 sm:p-4 sm:text-base dark:border-slate-700">
+                <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300"><svg className="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 2H8.5a3.5 3.5 0 0 0 0 7H12zM12 2h3.5a3.5 3.5 0 1 1 0 7H12zM12 9H8.5a3.5 3.5 0 0 0 0 7H12zM12 16H8.5a3.5 3.5 0 1 0 3.5 3.5zM12 12.5a3.5 3.5 0 1 0 7 0 3.5 3.5 0 1 0-7 0" /></svg></span>
                 <span><span className="block font-semibold">Figma</span></span>
               </li>
             </ul>

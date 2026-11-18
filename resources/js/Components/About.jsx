@@ -6,12 +6,13 @@ export default function About() {
       <div className="mx-auto max-w-6xl 2xl:max-w-7xl px-4 sm:px-6">
         <SectionTitle label="ABOUT ME" title="Get to know me" />
 
-        <div className="grid gap-6 md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
-          
-          <img data-reveal="" src="/images/profile/profile-light.png" alt="Justine Paul Viernes in a black suit and red tie" className="h-full max-h-[440px] w-full rounded-3xl bg-blue-100 object-cover dark:hidden" />
-          <img data-reveal="" src="/images/profile/profile-dark.png" alt="Justine Paul Viernes in a white suit and grey tie" className="hidden h-full max-h-[440px] w-full rounded-3xl bg-blue-950 object-cover dark:block" />
+        <div className="grid items-start gap-6 md:gap-8 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] lg:gap-6">
+          <div data-reveal="" className="w-full max-w-[440px] justify-self-center md:w-72 lg:w-full">
+            <img src="/images/profile/Formal_Portrait_with_Red_Tie-removebg-preview.png" alt="Justine Paul Viernes in a black suit and red tie" className="aspect-square w-full object-contain dark:hidden" />
+            <img src="/images/profile/Formal_White_and_Grey_Circular-removebg-preview.png" alt="Justine Paul Viernes in a white suit and grey tie" className="hidden aspect-square w-full object-contain dark:block" />
+          </div>
 
-          <div className="flex flex-col gap-6">
+          <div className="grid w-full gap-6 md:grid-cols-2 lg:grid-cols-1">
             <article data-reveal="" className="rounded-3xl border border-gray-200 bg-white p-8 dark:border-slate-800 dark:bg-slate-950">
               <div className="mb-4 flex items-center gap-3">
                 <span className="grid size-12 place-items-center rounded-2xl bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">

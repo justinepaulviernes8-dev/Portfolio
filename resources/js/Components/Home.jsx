@@ -2,8 +2,8 @@ import ProfileVideoPreview from './ProfileVideoPreview';
 
 export default function Home() {
     return (
-        <section id="home" className="flex min-h-[calc(100svh-69px)] scroll-mt-20 items-center">
-      <div className="mx-auto grid w-full max-w-6xl 2xl:max-w-7xl items-center gap-10 px-4 py-12 sm:px-6 md:grid-cols-2 md:py-16">
+        <section id="home" className="flex scroll-mt-20 items-center">
+      <div className="mx-auto grid w-full max-w-6xl 2xl:max-w-7xl items-center gap-10 px-4 py-8 sm:px-6 md:grid-cols-2 md:py-10 lg:py-12">
         <div data-reveal="" className="flex justify-center md:order-2">
           
           <div className="relative aspect-square w-[min(20rem,80vw,50svh)] lg:w-[min(26rem,52svh)]">
